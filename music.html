@@ -3,7 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Music</title>
+    <title>Choice Your Music</title>
   </head>
   <body></body>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  ​
+  <script type="text/javascript">
+    $(document).ready(function() {
+    ​
+    $.ajax({
+    type : "GET",
+    dataType : "JSON",
+    url : "https://www.googleapis.com/youtube/v3/&part=snippet&maxResults=8&key=AIzaSyB5h6YQThr3vv10l4MB2gihDwM4T7YkTGM",
+    contentType : "application/json",
+    success : function(jsonData) {
+    for (var i = 0; i < jsonData.items.length; i++) {
+        var items = jsonData.items[i];
+        console.log("title : "+items.snippet.title);
+        console.log("videoId : "+"https://youtu.be/"+items.snippet.resourceId.videoId);
+        console.log("썸네일 : "+items.snippet.thumbnails.high.url);
+    }
+    },
+    complete : function(data) {
+    },
+    error : function(xhr, status, error) {
+    console.log("유튜브 요청 에러: "+error);
+    }
+    });
+    });
+
+      //TODO: 음악 추천 프로그램
+      //1. 음악 분류에 따른 추천 -> 선택 후 다음 페이지
+      //2. 내가 좋아하는 음악 검색 후 선택
+      //3. 상황에 맞는 음악 분류(비오는 날 등)
+      //(해당 내역은 스킵 가능하다.)
+      // API 요청
+      // FIXME: API를 요청할만한 곳이 없음.
+      //Spotify = VPN 우회하여 가입, 30000 뭐시기 라디오 = Rapidapi
+      //구독해야힘.(일정기간 사용 후 유료) 등등
+      // TODO: Soundcloud Api를 이용해보자.
+      // 유튜브 Data Api를 사용하여 처리
+  </script>
 </html>
