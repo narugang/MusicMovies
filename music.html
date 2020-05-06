@@ -4,51 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Choice Your Music</title>
+    <link rel="stylesheet" href="./css/music.css" />
   </head>
   <body>
-    <div class="Test" id="thumbNM">
-      <img src="" alt="Thumb" />
-    </div>
-    <div>
-      <li>test22333</li>
-    </div>
+    <header style="width: 100%; height: 38px; border: 1px solid white;">
+      <div class="menuBar">
+        <ul class="menuBarWrap">
+          <li>Your Best Music</li>
+          <li>Your Best Movie</li>
+          <li>Contact Us</li>
+        </ul>
+      </div>
+    </header>
+    <section>
+      <div class="musicWrap">
+        <div class="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <polygon fill="black" points="20.62 55.62 45.74 30.5 20.62 5.38 16.38 9.62 37.26 30.5 16.38 51.38 20.62 55.62">
+          </svg>           -->
+        </div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+        <div class="musicContents"></div>
+      </div>
+    </section>
+    <footer></footer>
   </body>
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  ​
-  <script type="text/javascript">
-    // $(document).ready(function () {
-    //   console.log("ready!");
-    // });
-    let thumbNM = document.getElementById("thumbNM");
-    $(document).ready(function () {
+  <script src="./js/jquery.ajax-cross-origin.min.js"></script>
+  <script>
+    let data2 = {};
+    console.log("초기 data2 : " + data2);
+    let btn = document.querySelector("#btnTest");
+    btn.addEventListener("click", () => {
       $.ajax({
-        type: "GET",
-        dataType: "JSON",
+        crossOrigin: true,
+        dataType: "json",
         url:
-          "https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=AIzaSyB5h6YQThr3vv10l4MB2gihDwM4T7YkTGM&part=snippet,contentDetails,statistics,status&videoCategoryId=20",
-        contentType: "application/json",
-        success: function (jsonData) {
-          for (var i = 0; i < jsonData.items.length; i++) {
-            var items = jsonData.items[i];
-            let thumbNM = null;
-
-            document.console.log("title : " + items.snippet.title);
-            /*console.log(
-              "videoId : " +
-                "https://youtu.be/" +
-                items.snippet.resourceId.videoId
-            );*/
-            console.log("썸네일 : " + items.snippet.thumbnails.high.url);
-          }
-        },
-        complete: function (data) {
-          // console.log(data);
-        },
-        error: function (xhr, status, error) {
-          console.log("유튜브 요청 에러: " + error);
+          "http://musicovery.com/api/V6/artist.php?fct=getfromlocation&location=san%20francisco&genreNo=rock",
+        success: function (data) {
+          // data = JSON.parse(data);
+          console.log(typeof data);
+          console.log(data.artists.artist);
+          // console.log(data.artists.artist[0]);
         },
       });
+      console.log("마지막 data2 : " + data2);
     });
 
     //TODO: 음악 추천 프로그램
@@ -62,5 +72,6 @@
     //구독해야힘.(일정기간 사용 후 유료) 등등
     // TODO: Soundcloud Api를 이용해보자.
     // 유튜브 Data Api를 사용하여 처리
+    // 유튜브 Data Api를 이용하여 Test를 너무 많이해서 http://musicovery.com/api/V6/doc/documentation.php의 api로 변경
   </script>
 </html>
