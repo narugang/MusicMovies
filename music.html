@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Choice Your Music</title>
     <link rel="stylesheet" href="./css/music.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
+  <!-- TODO: 레이아웃 수정 -->
   <body>
     <header style="width: 100%; height: 38px; border: 1px solid white;">
       <div class="menuBar">
@@ -21,6 +26,14 @@
         <div class="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
+          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
         </div>
         <div class="musicContents"></div>
         <div class="musicContents"></div>
@@ -38,7 +51,44 @@
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="./js/jquery.ajax-cross-origin.min.js"></script>
+  <!-- TODO: 별점기능 추가 -  
+       1. 클래스 따로 분류 (musicContents)
+       2. span에 addeventlistener로 클릭을 받아서 클릭한 부분까지 클래스 변경해주고
+       3. CSS에서 클래스변경해준 내역을 토대로 프로퍼티 추가
+       4.  -->
+
   <script>
+    let rating = document.getElementsByClassName("setRating");
+    Array.from(rating).forEach((ratings) =>
+      ratings.addEventListener("click", setRating)
+    );
+    function getIndex(ele) {
+      var _i = 0;
+
+      while ((ele = ele.previousSibling) != null) {
+        _i++;
+      }
+      return _i;
+    }
+
+    function setRating(event) {
+      //FIXME: 클릭해준 곳에 따라 클래스나 아이디를 분류해주기
+      //클릭한 부분의 parent를 찾고 해당 target이 몇번째인지 탐색
+      //몇번째에 따라 for문으로 class 추가
+      let nowClick = event.target;
+      console.log(getIndex(nowClick));
+      // console.log(nowClick);
+      // for (let i = 0; i < event.target.parentNode.childNodes.length; i++) {
+      //   if (event.parentNode.childNodes[i] === event) {
+      //     console.log("elemIndex = " + i);
+      //   }
+      // }
+      // console.log(event.target.parentNode);
+    }
+    // rating.addEventListener("click", setRating);
+  </script>
+
+  <!-- <script>
     let data2 = {};
     console.log("초기 data2 : " + data2);
     let btn = document.querySelector("#btnTest");
@@ -56,19 +106,17 @@
         },
       });
       console.log("마지막 data2 : " + data2);
-    });
 
-    //TODO: 음악 추천 프로그램
-    //1. 음악 분류에 따른 추천 -> 선택 후 다음 페이지
-    //2. 내가 좋아하는 음악 검색 후 선택
-    //3. 상황에 맞는 음악 분류(비오는 날 등)
-    //(해당 내역은 스킵 가능하다.)
-    // API 요청
-    // FIXME: API를 요청할만한 곳이 없음.
-    //Spotify = VPN 우회하여 가입, 30000 뭐시기 라디오 = Rapidapi
-    //구독해야힘.(일정기간 사용 후 유료) 등등
-    // TODO: Soundcloud Api를 이용해보자.
-    // 유튜브 Data Api를 사용하여 처리
-    // 유튜브 Data Api를 이용하여 Test를 너무 많이해서 http://musicovery.com/api/V6/doc/documentation.php의 api로 변경
-  </script>
+      
+          //TODO: 음악 추천 프로그램
+          //1. 음악 분류에 따른 추천 -> 선택 후 다음 페이지
+          //2. 내가 좋아하는 음악 검색 후 선택
+          //3. 상황에 맞는 음악 분류(비오는 날 등)
+          //(해당 내역은 스킵 가능하다.)
+          //http://musicovery.com/api/V6/doc/documentation.php의 api로 변경
+          //TODO: 받아온 api 요청값을 토대로 음악종류 분류.
+      
+     
+    }); -->
+  <!-- </script> -->
 </html>

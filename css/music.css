@@ -19,28 +19,31 @@ section {
 
 section > div > div > img {
   width: 60%;
-  height: 250px;
+  min-height: 250px;
+  max-height: 400px;
   position: relative;
   /* top: 20px; */
-  left: 15%;
+  left: 20%;
 }
 .musicText {
   color: white;
   font-size: 20px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .musicWrap {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  position: relative;
+  width: 80%;
+  left: 11%;
 }
 
 .musicContents {
-  width: 24%;
-  min-height: 450px;
+  width: 23%;
+  height: 341px;
   border: 2px solid blue;
   margin-left: 10px;
   margin-top: 10px;
@@ -65,4 +68,36 @@ section > div > div > img {
   margin-right: 10px;
   background-color: white;
   padding: 10px;
+}
+
+.svg_stars {
+  position: relative;
+  top: 10px;
+  left: 20%;
+  /* height: 28px;
+  width: 28px; */
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+  position: relative;
+  top: 3%;
+  left: 20%;
+  cursor: pointer;
+  width: 60%;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+  color: #989898;
+  font-size: 30px;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+  content: "\2605";
+  position: absolute;
+  color: #ffc107;
 }
