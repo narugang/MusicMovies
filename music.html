@@ -23,7 +23,7 @@
     </header>
     <section>
       <div class="musicWrap">
-        <div class="musicContents">
+        <div class="musicContents1" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -35,7 +35,19 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents2" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악2</p>
+          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents3" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -47,7 +59,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents4" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -59,7 +71,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents5" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -71,7 +83,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents6" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -83,7 +95,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents7" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -95,7 +107,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents8" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -107,7 +119,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
+        <div class="musicContents9" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -119,19 +131,7 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents">
-          <img src="./images/todaymusic.png" />
-          <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
-          <div class="rating">
-            <span class="setRating rating_num1">★</span
-            ><span class="setRating rating_num2">★</span
-            ><span class="setRating rating_num3">★</span
-            ><span class="setRating rating_num4">★</span
-            ><span class="setRating rating_num5">★</span>
-          </div>
-        </div>
-        <div class="musicContents">
+        <div class="musicContents10" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
           <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
@@ -158,9 +158,35 @@
 
   <script>
     let rating = document.getElementsByClassName("setRating");
+    let checkedMusic = document.getElementsByClassName("checked");
+    let array = [];
+    function addArray(parent) {
+      let musicText = parent.children[1].textContent;
+      if (array.indexOf(musicText) === -1) {
+        array.push(parent.children[1].textContent);
+      }
+      console.log(array);
+    }
+
+    let data2 = {};
+
+    $.ajax({
+      crossOrigin: true,
+      dataType: "json",
+      url:
+        "http://musicovery.com/api/V6/artist.php?fct=getfromlocation&location=san%20francisco&genreNo=rock",
+
+      success: function (data) {
+        // data = JSON.parse(data);
+        console.log(data);
+        // console.log(data.artists.artist[0]);
+      },
+    });
+
     Array.from(rating).forEach((ratings) =>
       ratings.addEventListener("click", setRating)
     );
+
     //getIndex 부모요소의 몇번째인지 받아오는 function
     function getIndex(ele) {
       let _i = 5;
@@ -176,7 +202,15 @@
       //클릭한 부분의 parent를 찾고 해당 target이 몇번째인지 탐색
       //몇번째에 따라 for문으로 class 추가
       let nowClick = event.target;
-      console.log(getIndex(nowClick));
+      let parent = event.target.parentElement.parentElement;
+
+      for (let y = 0; y <= getIndex(nowClick) - 1; y++) {
+        parent.children[2].children[y].classList.add("get");
+        parent.classList.add("Checked");
+        let num = 4 - y;
+        parent.children[2].children[num].style.color = "blue";
+      }
+      addArray(parent);
       // console.log(nowClick);
       // for (let i = 0; i < event.target.parentNode.childNodes.length; i++) {
       //   if (event.parentNode.childNodes[i] === event) {
@@ -198,6 +232,7 @@
         dataType: "json",
         url:
           "http://musicovery.com/api/V6/artist.php?fct=getfromlocation&location=san%20francisco&genreNo=rock",
+        
         success: function (data) {
           // data = JSON.parse(data);
           console.log(typeof data);

@@ -41,7 +41,7 @@ section > div > div > img {
   left: 11%;
 }
 
-.musicContents {
+#musicContents {
   width: 23%;
   height: 341px;
   border: 2px solid blue;
@@ -101,3 +101,8 @@ section > div > div > img {
   position: absolute;
   color: #ffc107;
 }
+
+/* .get {
+  position: absolute !important;
+  color: blue !important;
+} */
