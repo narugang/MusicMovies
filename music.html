@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!-- TODO: 첫페이지 음악 장르 선택
+    1. 음악 장르 선택하면 API호출이 완료 될때까지 로딩 페이지 출력
+    2. 음악 List를 출력하되 기본값은 20이고, 스크롤바가 특정 부분까지 도달하거나 
+    3. 따로 버튼을 클릭했을 때 20개 추가되는 형식으로 구현
+    4. 출력 후 별점을 클릭하면 localStorage에 저장되어 추후에 별점 준 List를 조회할 수 있다. 1점,2점,3점,4점,5점  -->
 <html lang="UTF-8">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +14,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <style>
+      .musicWrap {
+        display: none;
+      }
+    </style>
   </head>
   <!-- TODO: 레이아웃 수정 -->
   <body>
@@ -22,11 +32,23 @@
       </div>
     </header>
     <section>
+      <div class="musicWrap choiceGenres" style="display: block;">
+        <span
+          >좋아하는 음악 장르를 선택하여 주십시오.<button id="nextBtn">
+            Submit
+          </button></span
+        >
+      </div>
+
+      <div class="musicWrap loading">
+        Loading중입니다..........
+        <div class="spinner"></div>
+      </div>
+
       <div class="musicWrap">
         <div class="musicContents1" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -38,7 +60,6 @@
         <div class="musicContents2" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악2</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -50,7 +71,6 @@
         <div class="musicContents3" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -62,7 +82,6 @@
         <div class="musicContents4" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -74,7 +93,6 @@
         <div class="musicContents5" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -86,7 +104,6 @@
         <div class="musicContents6" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -98,7 +115,6 @@
         <div class="musicContents7" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -110,7 +126,6 @@
         <div class="musicContents8" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -122,7 +137,6 @@
         <div class="musicContents9" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -134,7 +148,6 @@
         <div class="musicContents10" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -144,22 +157,80 @@
           </div>
         </div>
       </div>
+
+      <div class="musicWrap yourChoice">
+        <h1>★★★★★</h1>
+        <h1>★★★★</h1>
+        <h1>★★★</h1>
+        <h1>★★</h1>
+        <h1>★</h1>
+      </div>
     </section>
     <footer></footer>
   </body>
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="./js/jquery.ajax-cross-origin.min.js"></script>
-  <!-- TODO: 별점기능 추가 -  
+  <!-- 별점기능 추가 -  
        1. 클래스 따로 분류 (musicContents)
        2. span에 addeventlistener로 클릭을 받아서 클릭한 부분까지 클래스 변경해주고
        3. CSS에서 클래스변경해준 내역을 토대로 프로퍼티 추가
        4.  -->
+  <!-- TODO: 분류별로 출력
+    YOUTUBE DATA V3 API 사용해서 출력
+    1. 첫번째 페이지를 장르 선택 페이지로 수정
+    2. 설정한 장르별로 API 호출 파라미터의 값을 변경 (topicID)
+    3. 설정한 장르 갯수에 따라 API호출 횟수를 다르게. TOPIC_ID.length 
+    4. 설정한 장르 갯수에 따라 param = maxresult의 값을 다르게 하거나 
+    5. 불러온 값에서 장르별로 불러온 데이터를 랜덤으로 돌려서 20개정도 출력
+    6. 별점 설정해서 추천해주는 것은 JAVASCRIPT와 API의 한계로 추후에 구현하고,
+    7. localStorage에 저장하여, 별점 준 점수에 따라 조회할 수 있도록 구현한다. -->
 
+  <!-- TODO:유튜브 API_KEY github와 chrome 개발자도구에 노출되지 않도록 수정 -->
+
+  <!-- /m/04rlf Music
+       /m/05fw6t Children's music
+       /m/02mscn Christian music
+       /m/0ggq0m Classical music
+       /m/01lyv Country
+       /m/02lkt Electronic music
+       /m/0glt670 Hip hop music
+       /m/05rwpb Independent music
+       /m/03_d0 Jazz
+       /m/028sqc Music of Asia
+       /m/0g293 Music of Latin America
+       /m/064t9 Pop music
+       /m/06cqb Reggae
+       /m/06j6l Rhythm and blues
+       /m/06by7 Rock music
+       /m/0gywn Soul music-->
   <script>
+    const music_genres = {
+      Music: "/m/04rls",
+      "Children's music": "/m/05fw6t",
+      Christian_Music: "/m/02cmns",
+      Classical_Music: "/m/00ggmq",
+      Country: "/m/01lvy",
+      Electronic_Music: "/m/02klt",
+      Hiphop_Music: "/m/0glt670",
+      Independent_Music: "/m/05rwpb",
+      Jazz: "/m/03_d0",
+      Music_Of_Asia: "/m/028sqc",
+      Music_Of_Latin_America: "/m/0g293",
+      Pop_Music: "/m/064t9",
+      Reggae: "/m/06cqb",
+      Rhythm_And_Blues: "/m/06j6l",
+      Rock_Music: "/m/06by7",
+      Soul_Music: "/m/0gywn",
+    };
     let rating = document.getElementsByClassName("setRating");
     let checkedMusic = document.getElementsByClassName("checked");
     let array = [];
+    const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
+    const YOUTUBE_KEY = "AIzaSyCBZ4UqNyNUSI1JbGGerksXhYcDuTCiCcc";
+    let TOPIC_ID = "";
+
+    let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=/m/064t9&key=${YOUTUBE_KEY}&maxResults=20`;
     function addArray(parent) {
       let musicText = parent.children[1].textContent;
       if (array.indexOf(musicText) === -1) {
@@ -170,17 +241,17 @@
 
     let data2 = {};
 
-    $.ajax({
-      crossOrigin: true,
-      dataType: "json",
-      url: "https://yts-proxy.now.sh/list_movies.json?sort_by=rating",
+    // $.ajax({
+    //   crossOrigin: true,
+    //   dataType: "json",
+    //   url: URL,
 
-      success: function (data) {
-        // data = JSON.parse(data);
-        console.log(data);
-        // console.log(data.artists.artist[0]);
-      },
-    });
+    //   success: function (data) {
+    //     // data = JSON.parse(data);
+    //     console.log(data);
+    //     // console.log(data.artists.artist[0]);
+    //   },
+    // });
 
     Array.from(rating).forEach((ratings) =>
       ratings.addEventListener("click", setRating)
@@ -218,6 +289,27 @@
       // }
       // console.log(event.target.parentNode);
     }
+
+    const nextBtn = document.getElementById("nextBtn");
+    function nextPage() {
+      const mcWrap = document.getElementsByClassName("musicWrap");
+      let nowPage = 1;
+      // mcWrap0 = Choice Genres
+      // mcWrap1 = Loading Page
+      // mcWrap2 = Music Array
+      Array.from(mcWrap).forEach((mcWraps) => {
+        mcWraps.style.display = "none";
+      });
+      if (nowPage === 1) {
+        mcWrap[1].style.display = "flex";
+        setTimeout(() => {
+          mcWrap[1].style.display = "none";
+          nowPage = 2;
+          mcWrap[nowPage].style.display = "flex";
+        }, 1500);
+      }
+    }
+    nextBtn.addEventListener("click", nextPage);
     // rating.addEventListener("click", setRating);
   </script>
 
