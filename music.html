@@ -30,19 +30,34 @@
           <li>Contact Us</li>
         </ul>
       </div>
+      <button onclick="javascript:chooseTab(0)">Tab0</button>
+      <button onclick="javascript:chooseTab(1)">Tab1</button>
+      <button onclick="javascript:chooseTab(2)">Tab2</button>
     </header>
     <section>
-      <div class="musicWrap choiceGenres" style="display: block;">
-        <span
-          >좋아하는 음악 장르를 선택하여 주십시오.<button id="nextBtn">
-            Submit
-          </button></span
-        >
+      <div class="musicWrap choiceGenres" style="display: none;">
+        <div class="choiceGenres_box">
+          <span class="css-genrespan"
+            >좋아하는 음악 장르를 선택하여 주십시오.</span
+          >
+          <p class="css-genresp">
+            최소 한개 이상의 음악 장르를 골라주세요 , 완료하셨다면 → 눌러주세요.
+            <button id="nextBtn">
+              Submit
+            </button>
+          </p>
+          <!-- TODO: 여기에 music_genres 객체 for in 으로 돌려주기. -->
+        </div>
       </div>
 
-      <div class="musicWrap loading">
-        Loading중입니다..........
-        <div class="spinner"></div>
+      <div class="musicWrap loading" style="display: flex;">
+        <div>
+          <div class="spinner"></div>
+          <p class="loading_txt1">Loading...</p>
+          <p class="loading_txt2">
+            설정한 음악 장르에 맞춘 데이터를 분석중입니다.
+          </p>
+        </div>
       </div>
 
       <div class="musicWrap">
@@ -171,6 +186,14 @@
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="./js/jquery.ajax-cross-origin.min.js"></script>
+  <!--    Youtube TopicID = 
+          /m/04rlf Music /m/05fw6t Children's music /m/02mscn Christian music
+          /m/0ggq0m Classical music /m/01lyv Country /m/02lkt Electronic music
+          /m/0glt670 Hip hop music /m/05rwpb Independent music /m/03_d0 Jazz
+          /m/028sqc Music of Asia /m/0g293 Music of Latin America /m/064t9 Pop
+          music /m/06cqb Reggae /m/06j6l Rhythm and blues /m/06by7 Rock music
+          /m/0gywn Soul music -->
+
   <!-- 별점기능 추가 -  
        1. 클래스 따로 분류 (musicContents)
        2. span에 addeventlistener로 클릭을 받아서 클릭한 부분까지 클래스 변경해주고
@@ -188,22 +211,6 @@
 
   <!-- TODO:유튜브 API_KEY github와 chrome 개발자도구에 노출되지 않도록 수정 -->
 
-  <!-- /m/04rlf Music
-       /m/05fw6t Children's music
-       /m/02mscn Christian music
-       /m/0ggq0m Classical music
-       /m/01lyv Country
-       /m/02lkt Electronic music
-       /m/0glt670 Hip hop music
-       /m/05rwpb Independent music
-       /m/03_d0 Jazz
-       /m/028sqc Music of Asia
-       /m/0g293 Music of Latin America
-       /m/064t9 Pop music
-       /m/06cqb Reggae
-       /m/06j6l Rhythm and blues
-       /m/06by7 Rock music
-       /m/0gywn Soul music-->
   <script>
     const music_genres = {
       Music: "/m/04rls",
@@ -228,9 +235,10 @@
     let array = [];
     const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
     const YOUTUBE_KEY = "AIzaSyCBZ4UqNyNUSI1JbGGerksXhYcDuTCiCcc";
-    let TOPIC_ID = "";
+    let TOPIC_ID = "/m/04rls"; //Default Topic = Music
 
-    let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=/m/064t9&key=${YOUTUBE_KEY}&maxResults=20`;
+    let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${TOPIC_ID}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=US`;
+
     function addArray(parent) {
       let musicText = parent.children[1].textContent;
       if (array.indexOf(musicText) === -1) {
@@ -240,7 +248,7 @@
     }
 
     let data2 = {};
-
+    //FIXME: 계속되는 요청으로 API 제한이 걸리기때문에 주석 처리
     // $.ajax({
     //   crossOrigin: true,
     //   dataType: "json",
@@ -311,6 +319,43 @@
     }
     nextBtn.addEventListener("click", nextPage);
     // rating.addEventListener("click", setRating);
+
+    function chooseTab(param) {
+      const musicWrap = document.getElementsByClassName("musicWrap");
+      if (param === 0) {
+        musicWrap[param].style.display = "flex";
+        musicWrap[1].style.display = "none";
+        musicWrap[2].style.display = "none";
+      } else if (param === 1) {
+        musicWrap[param].style.display = "flex";
+        musicWrap[0].style.display = "none";
+        musicWrap[2].style.display = "none";
+      } else if (param === 2) {
+        musicWrap[param].style.display = "flex";
+        musicWrap[1].style.display = "none";
+        musicWrap[0].style.display = "none";
+      }
+    }
+
+    function yourChoice() {
+      let html = "";
+
+      //FIXME: YOUTUBE DATA V3 API 호출 함수, 지속적 요청으로 요청 한도에 걸리기 때문에 주석처리.
+      // $.ajax({
+      //   crossOrigin: true,
+      //   dataType: "json",
+      //   url: URL,
+      //   success: function (data) {
+      //     data = JSON.parse(data);
+      //     console.log(data);
+      //     Array.from(data.items).forEach((datas) => {
+      //       console.log(html);
+      //     });
+      //   },
+      // });
+    }
+
+    yourChoice();
   </script>
 
   <!-- <script>
