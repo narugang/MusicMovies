@@ -37,13 +37,16 @@
     };
 
     var infomation = new Array("title_long", "rating", "runtime");
-    alert(infomation[0]);
-    alert(infomation[1]);
+
     function showMovies(jsonObj) {
       for (i = 0; i < 8; i++) {
         for (j = 0; j < infomation.length; j++) {
-          document.getElementById("testSec" + i).innerHTML =
-            jsonObj.data.movies[i].infomation[j];
+          document.getElementById("testSec" + i).innerText =
+            jsonObj.data.movies[i][infomation[j]];
+          // document.getElementById("testSec" + i).innerHTML =
+          //   jsonObj.data.movies[i].rating;
+          // document.getElementById("testSec" + i).innerHTML =
+          //   jsonObj.data.movies[i].runtime;
         }
         console.log(jsonObj.data.movies[i]);
       }
@@ -72,7 +75,12 @@
     </nav>
     <section>
       <div id="movieContent">
-        <div id="testSec0"></div>
+        <div id="testSec0">
+          <img src="" alt="" />
+          <div id="title"></div>
+          <div id="rating"></div>
+          <div id=""></div>
+        </div>
         <div id="testSec1"></div>
         <div id="testSec2"></div>
         <div id="testSec3"></div>
