@@ -7,6 +7,35 @@
     <link rel="stylesheet" href="./css/movies.css" />
     <style></style>
   </head>
+  <script>
+    var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
+    var request = new XMLHttpRequest();
+
+    request.open("GET", requestURL);
+    console.log(request);
+
+    request.responseType = "json";
+    request.send();
+
+    console.log(request);
+
+    //응답이 반환 된 후
+    request.onload = function () {
+      //응답을 변수에 담는다. (movies)
+      var movies = request.response;
+      console.log(movies);
+
+      //변수에 담은(movies)를 JS 객체에 포함한다.
+      showMovies(movies);
+    };
+
+    function showMovies(jsonObj) {
+      var testSec = document.getElementById("testSec");
+      // testSec.innerHTML = jsonObj["movies"];
+      testSec.innerHTML = jsonObj["movies"];
+      console.log(jsonObj["movies"]);
+    }
+  </script>
   <body>
     <header>
       <div class="menuBar">
@@ -29,6 +58,7 @@
       </div>
     </nav>
     <section>
+      <div id="testSec"></div>
       <div id="movieContent">
         <div><img src="./images/movies/hobbit.jpg" /></div>
         <div><img src="./images/movies/hobbit2.jpg" /></div>
@@ -48,11 +78,4 @@
     </footer>
   </body>
   <script type="text/javascript" src="./js/movies.js"></script>
-  <script>
-    var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
-    var request = new XMLHttpRequest();
-
-    request.open("GET", requestURL);
-    console.log(request);
-  </script>
 </html>
