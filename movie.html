@@ -5,14 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>movies</title>
     <link rel="stylesheet" href="./css/movies.css" />
-    <style>
-      #movieContent > div {
-        width: 300px;
-        height: 400px;
-        background-color: white;
-        margin: 20px;
-      }
-    </style>
+    <style></style>
   </head>
   <script>
     var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
@@ -36,17 +29,11 @@
       showMovies(movies);
     };
 
-    var infomation = new Array("title_long", "rating", "runtime");
-    alert(infomation[0]);
-    alert(infomation[1]);
     function showMovies(jsonObj) {
-      for (i = 0; i < 8; i++) {
-        for (j = 0; j < infomation.length; j++) {
-          document.getElementById("testSec" + i).innerHTML =
-            jsonObj.data.movies[i].infomation[j];
-        }
-        console.log(jsonObj.data.movies[i]);
-      }
+      var testSec = document.getElementById("testSec");
+      // testSec.innerHTML = jsonObj["movies"];
+      testSec.innerHTML = jsonObj["movies"];
+      console.log(jsonObj["movies"]);
     }
   </script>
   <body>
@@ -71,16 +58,8 @@
       </div>
     </nav>
     <section>
+      <div id="testSec"></div>
       <div id="movieContent">
-        <div id="testSec0"></div>
-        <div id="testSec1"></div>
-        <div id="testSec2"></div>
-        <div id="testSec3"></div>
-        <div id="testSec4"></div>
-        <div id="testSec5"></div>
-        <div id="testSec6"></div>
-        <div id="testSec7"></div>
-        <div id="testSec8"></div>
         <div><img src="./images/movies/hobbit.jpg" /></div>
         <div><img src="./images/movies/hobbit2.jpg" /></div>
         <div><img src="./images/movies/hobbit3.jpg" /></div>

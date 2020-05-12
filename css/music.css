@@ -58,6 +58,49 @@ section > div > div > img {
   border: 1px solid white;
 } */
 
+#musicGenres {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  width: 80%;
+  left: 11%;
+
+  /* ----------------------------- */
+  /* width: 23%;
+  height: 320px;
+  margin-left: 10px;
+  margin-top: 10px; */
+  /* border: 1px solid red; */
+}
+.css-userGenres {
+  position: relative;
+  /* top: 30px; */
+  /* text-align: left; */
+  color: white;
+  font-size: 25px;
+  margin-left: 10px;
+}
+.css-genresimg {
+  width: 100%;
+  height: 75%;
+  left: 0px;
+}
+
+.css-genresTxt {
+  height: 24%;
+  text-align: left;
+  /* border: 1px solid red; */
+  background-color: #484848;
+  cursor: pointer;
+}
+
+.css-genresWrap {
+  width: 23%;
+  height: 341px;
+  /* border: 2px solid blue; */
+  margin-left: 10px;
+  margin-top: 10px;
+}
 .menuBarWrap {
 }
 
@@ -129,6 +172,11 @@ section > div > div > img {
   font-family: "Arvo", serif;
   font-weight: 900;
   color: burlywood;
+}
+
+.css-userGenresP {
+  margin-top: 5px;
+  margin-left: 12px;
 }
 /* .get {
   position: absolute !important;

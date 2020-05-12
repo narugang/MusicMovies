@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Choice Your Music</title>
     <link rel="stylesheet" href="./css/music.css" />
-    <link
+    <link 
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
@@ -20,7 +20,6 @@
       }
     </style>
   </head>
-  <!-- TODO: 레이아웃 수정 -->
   <body>
     <header style="width: 100%; height: 38px; border: 1px solid white;">
       <div class="menuBar">
@@ -35,7 +34,7 @@
       <button onclick="javascript:chooseTab(2)">Tab2</button>
     </header>
     <section>
-      <div class="musicWrap choiceGenres" style="display: none;">
+      <div class="musicWrap choiceGenres" style="display: flex;">
         <div class="choiceGenres_box">
           <span class="css-genrespan"
             >좋아하는 음악 장르를 선택하여 주십시오.</span
@@ -46,11 +45,13 @@
               Submit
             </button>
           </p>
-          <!-- TODO: 여기에 music_genres 객체 for in 으로 돌려주기. -->
+        </div>
+        <div id="musicGenres">
+        </div>
         </div>
       </div>
 
-      <div class="musicWrap loading" style="display: flex;">
+      <div class="musicWrap loading" style="display: none;">
         <div>
           <div class="spinner"></div>
           <p class="loading_txt1">Loading...</p>
@@ -183,9 +184,11 @@
     </section>
     <footer></footer>
   </body>
+  <!-- FIXME: jquery cdn 호출 , 바닐라 자바스크립트 테스트용으로 주석, 음악 종류 출력 완료후 살리기 -->
+  <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+  <!-- <script src="./js/jquery.ajax-cross-origin.min.js"></script> -->
 
-  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="./js/jquery.ajax-cross-origin.min.js"></script>
+
   <!--    Youtube TopicID = 
           /m/04rlf Music /m/05fw6t Children's music /m/02mscn Christian music
           /m/0ggq0m Classical music /m/01lyv Country /m/02lkt Electronic music
@@ -236,15 +239,33 @@
     const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
     const YOUTUBE_KEY = "AIzaSyCBZ4UqNyNUSI1JbGGerksXhYcDuTCiCcc";
     let TOPIC_ID = "/m/04rls"; //Default Topic = Music
-
+   
+    
     let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${TOPIC_ID}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=US`;
-
     let html = "";
-    let here = document.getElementsByClassName("choiceGenres_box");
+    let here = document.getElementById("musicGenres");
+    let genresBtn = document.getElementsByClassName("css-genresTxt");
+    
+    // Array.from(genresBtn).forEach((genresBtns) =>
+    //   genresBtns.addEventListener("click", userGenres)
+    // );
+    
+    // function userGenres(event) {
+    //   console.log(event);
+    // }
+   
+
     for (var i in music_genres) {
-      html += "<input type='checkbox'> </input>";
-      here.append(html);
+      html += `<div class="css-genresWrap">`;
+      html += `<img src="./images/movies/loadOfRing.jpg" class="css-genresimg" />`;
+      html += `<div class="css-genresTxt">`;
+      html += `<span class="css-userGenres">${i} </input></span>`;
+      html += `<p class="css-userGenresP">6 Albums</p>`;
+      html += `<input type="hidden" value="${music_genres[i]}" />`
+      html += `</div>`;
+      html += `</div>`;
     }
+    here.innerHTML = html;
 
     function addArray(parent) {
       let musicText = parent.children[1].textContent;
@@ -268,7 +289,7 @@
     //   },
     // });
 
-    Array.from(rating).forEach((ratings) =>
+    Array.from(rating).forEach((ratings) => 
       ratings.addEventListener("click", setRating)
     );
 
@@ -346,6 +367,7 @@
     }
 
     function yourChoice() {
+      
       //FIXME: YOUTUBE DATA V3 API 호출 함수, 지속적 요청으로 요청 한도에 걸리기 때문에 주석처리.
       // $.ajax({
       //   crossOrigin: true,
@@ -364,36 +386,5 @@
     yourChoice();
   </script>
 
-  <!-- <script>
-    let data2 = {};
-    console.log("초기 data2 : " + data2);
-    let btn = document.querySelector("#btnTest");
-    btn.addEventListener("click", () => {
-      $.ajax({
-        crossOrigin: true,
-        dataType: "json",
-        url:
-          "http://musicovery.com/api/V6/artist.php?fct=getfromlocation&location=san%20francisco&genreNo=rock",
-        
-        success: function (data) {
-          // data = JSON.parse(data);
-          console.log(typeof data);
-          console.log(data.artists.artist);
-          // console.log(data.artists.artist[0]);
-        },
-      });
-      console.log("마지막 data2 : " + data2);
-
-      
-          //TODO: 음악 추천 프로그램
-          //1. 음악 분류에 따른 추천 -> 선택 후 다음 페이지
-          //2. 내가 좋아하는 음악 검색 후 선택
-          //3. 상황에 맞는 음악 분류(비오는 날 등)
-          //(해당 내역은 스킵 가능하다.)
-          //http://musicovery.com/api/V6/doc/documentation.php의 api로 변경
-          //TODO: 받아온 api 요청값을 토대로 음악종류 분류.
-      
-     
-    }); -->
-  <!-- </script> -->
+  
 </html>
