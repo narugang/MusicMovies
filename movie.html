@@ -29,11 +29,20 @@
       showMovies(movies);
     };
 
+    var infomation = new Array("title_long", "rating", "runtime");
+
     function showMovies(jsonObj) {
-      var testSec = document.getElementById("testSec");
-      // testSec.innerHTML = jsonObj["movies"];
-      testSec.innerHTML = jsonObj["movies"];
-      console.log(jsonObj["movies"]);
+      for (i = 0; i < 8; i++) {
+        for (j = 0; j < infomation.length; j++) {
+          document.getElementById("testSec" + i).innerText =
+            jsonObj.data.movies[i][infomation[j]];
+          // document.getElementById("testSec" + i).innerHTML =
+          //   jsonObj.data.movies[i].rating;
+          // document.getElementById("testSec" + i).innerHTML =
+          //   jsonObj.data.movies[i].runtime;
+        }
+        console.log(jsonObj.data.movies[i]);
+      }
     }
   </script>
   <body>
@@ -60,6 +69,22 @@
     <section>
       <div id="testSec"></div>
       <div id="movieContent">
+        <<<<<<< HEAD =======
+        <div id="testSec0">
+          <img src="" alt="" />
+          <div id="title"></div>
+          <div id="rating"></div>
+          <div id=""></div>
+        </div>
+        <div id="testSec1"></div>
+        <div id="testSec2"></div>
+        <div id="testSec3"></div>
+        <div id="testSec4"></div>
+        <div id="testSec5"></div>
+        <div id="testSec6"></div>
+        <div id="testSec7"></div>
+        <div id="testSec8"></div>
+        >>>>>>> 9ba8d9a2299db6305014cf117de2e3698e2a61a9
         <div><img src="./images/movies/hobbit.jpg" /></div>
         <div><img src="./images/movies/hobbit2.jpg" /></div>
         <div><img src="./images/movies/hobbit3.jpg" /></div>
