@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!-- TODO: 첫페이지 음악 장르 선택
+    1. 음악 장르 선택하면 API호출이 완료 될때까지 로딩 페이지 출력
+    2. 음악 List를 출력하되 기본값은 20이고, 스크롤바가 특정 부분까지 도달하거나 
+    3. 따로 버튼을 클릭했을 때 20개 추가되는 형식으로 구현
+    4. 출력 후 별점을 클릭하면 localStorage에 저장되어 추후에 별점 준 List를 조회할 수 있다. 1점,2점,3점,4점,5점  -->
 <html lang="UTF-8">
   <head>
     <meta charset="UTF-8" />
@@ -9,6 +14,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <style>
+      .musicWrap {
+        display: none;
+      }
+    </style>
   </head>
   <!-- TODO: 레이아웃 수정 -->
   <body>
@@ -20,13 +30,40 @@
           <li>Contact Us</li>
         </ul>
       </div>
+      <button onclick="javascript:chooseTab(0)">Tab0</button>
+      <button onclick="javascript:chooseTab(1)">Tab1</button>
+      <button onclick="javascript:chooseTab(2)">Tab2</button>
     </header>
     <section>
+      <div class="musicWrap choiceGenres" style="display: none;">
+        <div class="choiceGenres_box">
+          <span class="css-genrespan"
+            >좋아하는 음악 장르를 선택하여 주십시오.</span
+          >
+          <p class="css-genresp">
+            최소 한개 이상의 음악 장르를 골라주세요 , 완료하셨다면 → 눌러주세요.
+            <button id="nextBtn">
+              Submit
+            </button>
+          </p>
+          <!-- TODO: 여기에 music_genres 객체 for in 으로 돌려주기. -->
+        </div>
+      </div>
+
+      <div class="musicWrap loading" style="display: flex;">
+        <div>
+          <div class="spinner"></div>
+          <p class="loading_txt1">Loading...</p>
+          <p class="loading_txt2">
+            설정한 음악 장르에 맞춘 데이터를 분석중입니다.
+          </p>
+        </div>
+      </div>
+
       <div class="musicWrap">
-        <div class="musicContents">
+        <div class="musicContents1" id="musicContents">
           <img src="./images/todaymusic.png" />
           <p class="musicText">이달의 음악</p>
-          <!-- TODO: SVG를 이용해 별점주기 기능 추가. SVG 사용 예제가 별로 없어서 awesome-font로 대체하였음. (구현중) -->
           <div class="rating">
             <span class="setRating rating_num1">★</span
             ><span class="setRating rating_num2">★</span
@@ -35,15 +72,113 @@
             ><span class="setRating rating_num5">★</span>
           </div>
         </div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
-        <div class="musicContents"></div>
+        <div class="musicContents2" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악2</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents3" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents4" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents5" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents6" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents7" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents8" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents9" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+        <div class="musicContents10" id="musicContents">
+          <img src="./images/todaymusic.png" />
+          <p class="musicText">이달의 음악</p>
+          <div class="rating">
+            <span class="setRating rating_num1">★</span
+            ><span class="setRating rating_num2">★</span
+            ><span class="setRating rating_num3">★</span
+            ><span class="setRating rating_num4">★</span
+            ><span class="setRating rating_num5">★</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="musicWrap yourChoice">
+        <h1>★★★★★</h1>
+        <h1>★★★★</h1>
+        <h1>★★★</h1>
+        <h1>★★</h1>
+        <h1>★</h1>
       </div>
     </section>
     <footer></footer>
@@ -51,24 +186,93 @@
 
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="./js/jquery.ajax-cross-origin.min.js"></script>
-  <!-- TODO: 별점기능 추가 -  
+  <!--    Youtube TopicID = 
+          /m/04rlf Music /m/05fw6t Children's music /m/02mscn Christian music
+          /m/0ggq0m Classical music /m/01lyv Country /m/02lkt Electronic music
+          /m/0glt670 Hip hop music /m/05rwpb Independent music /m/03_d0 Jazz
+          /m/028sqc Music of Asia /m/0g293 Music of Latin America /m/064t9 Pop
+          music /m/06cqb Reggae /m/06j6l Rhythm and blues /m/06by7 Rock music
+          /m/0gywn Soul music -->
+
+  <!-- 별점기능 추가 -  
        1. 클래스 따로 분류 (musicContents)
        2. span에 addeventlistener로 클릭을 받아서 클릭한 부분까지 클래스 변경해주고
        3. CSS에서 클래스변경해준 내역을 토대로 프로퍼티 추가
        4.  -->
+  <!-- TODO: 분류별로 출력
+    YOUTUBE DATA V3 API 사용해서 출력
+    1. 첫번째 페이지를 장르 선택 페이지로 수정
+    2. 설정한 장르별로 API 호출 파라미터의 값을 변경 (topicID)
+    3. 설정한 장르 갯수에 따라 API호출 횟수를 다르게. TOPIC_ID.length 
+    4. 설정한 장르 갯수에 따라 param = maxresult의 값을 다르게 하거나 
+    5. 불러온 값에서 장르별로 불러온 데이터를 랜덤으로 돌려서 20개정도 출력
+    6. 별점 설정해서 추천해주는 것은 JAVASCRIPT와 API의 한계로 추후에 구현하고,
+    7. localStorage에 저장하여, 별점 준 점수에 따라 조회할 수 있도록 구현한다. -->
+
+  <!-- TODO:유튜브 API_KEY github와 chrome 개발자도구에 노출되지 않도록 수정 -->
 
   <script>
+    const music_genres = {
+      Music: "/m/04rls",
+      "Children's music": "/m/05fw6t",
+      Christian_Music: "/m/02cmns",
+      Classical_Music: "/m/00ggmq",
+      Country: "/m/01lvy",
+      Electronic_Music: "/m/02klt",
+      Hiphop_Music: "/m/0glt670",
+      Independent_Music: "/m/05rwpb",
+      Jazz: "/m/03_d0",
+      Music_Of_Asia: "/m/028sqc",
+      Music_Of_Latin_America: "/m/0g293",
+      Pop_Music: "/m/064t9",
+      Reggae: "/m/06cqb",
+      Rhythm_And_Blues: "/m/06j6l",
+      Rock_Music: "/m/06by7",
+      Soul_Music: "/m/0gywn",
+    };
     let rating = document.getElementsByClassName("setRating");
+    let checkedMusic = document.getElementsByClassName("checked");
+    let array = [];
+    const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
+    const YOUTUBE_KEY = "AIzaSyCBZ4UqNyNUSI1JbGGerksXhYcDuTCiCcc";
+    let TOPIC_ID = "/m/04rls"; //Default Topic = Music
+
+    let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${TOPIC_ID}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=US`;
+
+    function addArray(parent) {
+      let musicText = parent.children[1].textContent;
+      if (array.indexOf(musicText) === -1) {
+        array.push(parent.children[1].textContent);
+      }
+      console.log(array);
+    }
+
+    let data2 = {};
+    //FIXME: 계속되는 요청으로 API 제한이 걸리기때문에 주석 처리
+    // $.ajax({
+    //   crossOrigin: true,
+    //   dataType: "json",
+    //   url: URL,
+
+    //   success: function (data) {
+    //     // data = JSON.parse(data);
+    //     console.log(data);
+    //     // console.log(data.artists.artist[0]);
+    //   },
+    // });
+
     Array.from(rating).forEach((ratings) =>
       ratings.addEventListener("click", setRating)
     );
+
+    //getIndex 부모요소의 몇번째인지 받아오는 function
     function getIndex(ele) {
-      var _i = 0;
+      let _i = 5;
 
       while ((ele = ele.previousSibling) != null) {
-        _i++;
+        _i--;
       }
-      return _i;
+      return _i + 1;
     }
 
     function setRating(event) {
@@ -76,7 +280,15 @@
       //클릭한 부분의 parent를 찾고 해당 target이 몇번째인지 탐색
       //몇번째에 따라 for문으로 class 추가
       let nowClick = event.target;
-      console.log(getIndex(nowClick));
+      let parent = event.target.parentElement.parentElement;
+
+      for (let y = 0; y <= getIndex(nowClick) - 1; y++) {
+        parent.children[2].children[y].classList.add("get");
+        parent.classList.add("Checked");
+        let num = 4 - y;
+        parent.children[2].children[num].style.color = "blue";
+      }
+      addArray(parent);
       // console.log(nowClick);
       // for (let i = 0; i < event.target.parentNode.childNodes.length; i++) {
       //   if (event.parentNode.childNodes[i] === event) {
@@ -85,7 +297,65 @@
       // }
       // console.log(event.target.parentNode);
     }
+
+    const nextBtn = document.getElementById("nextBtn");
+    function nextPage() {
+      const mcWrap = document.getElementsByClassName("musicWrap");
+      let nowPage = 1;
+      // mcWrap0 = Choice Genres
+      // mcWrap1 = Loading Page
+      // mcWrap2 = Music Array
+      Array.from(mcWrap).forEach((mcWraps) => {
+        mcWraps.style.display = "none";
+      });
+      if (nowPage === 1) {
+        mcWrap[1].style.display = "flex";
+        setTimeout(() => {
+          mcWrap[1].style.display = "none";
+          nowPage = 2;
+          mcWrap[nowPage].style.display = "flex";
+        }, 1500);
+      }
+    }
+    nextBtn.addEventListener("click", nextPage);
     // rating.addEventListener("click", setRating);
+
+    function chooseTab(param) {
+      const musicWrap = document.getElementsByClassName("musicWrap");
+      if (param === 0) {
+        musicWrap[param].style.display = "flex";
+        musicWrap[1].style.display = "none";
+        musicWrap[2].style.display = "none";
+      } else if (param === 1) {
+        musicWrap[param].style.display = "flex";
+        musicWrap[0].style.display = "none";
+        musicWrap[2].style.display = "none";
+      } else if (param === 2) {
+        musicWrap[param].style.display = "flex";
+        musicWrap[1].style.display = "none";
+        musicWrap[0].style.display = "none";
+      }
+    }
+
+    function yourChoice() {
+      let html = "";
+
+      //FIXME: YOUTUBE DATA V3 API 호출 함수, 지속적 요청으로 요청 한도에 걸리기 때문에 주석처리.
+      // $.ajax({
+      //   crossOrigin: true,
+      //   dataType: "json",
+      //   url: URL,
+      //   success: function (data) {
+      //     data = JSON.parse(data);
+      //     console.log(data);
+      //     Array.from(data.items).forEach((datas) => {
+      //       console.log(html);
+      //     });
+      //   },
+      // });
+    }
+
+    yourChoice();
   </script>
 
   <!-- <script>
@@ -98,6 +368,7 @@
         dataType: "json",
         url:
           "http://musicovery.com/api/V6/artist.php?fct=getfromlocation&location=san%20francisco&genreNo=rock",
+        
         success: function (data) {
           // data = JSON.parse(data);
           console.log(typeof data);
