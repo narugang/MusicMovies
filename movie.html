@@ -48,4 +48,11 @@
     </footer>
   </body>
   <script type="text/javascript" src="./js/movies.js"></script>
+  <script>
+    var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
+    var request = new XMLHttpRequest();
+
+    request.open("GET", requestURL);
+    console.log(request);
+  </script>
 </html>
