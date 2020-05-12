@@ -26,7 +26,7 @@
       <div class="menuBar">
         <ul class="menuBarWrap">
           <li>Your Best Music</li>
-          <li>Your Best Movie</li>
+          <li><a href="movie.html">Your Best Movie</a></li>
           <li>Contact Us</li>
         </ul>
       </div>
@@ -239,6 +239,13 @@
 
     let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${TOPIC_ID}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=US`;
 
+    let html = "";
+    let here = document.getElementsByClassName("choiceGenres_box");
+    for (var i in music_genres) {
+      html += "<input type='checkbox'> </input>";
+      here.append(html);
+    }
+
     function addArray(parent) {
       let musicText = parent.children[1].textContent;
       if (array.indexOf(musicText) === -1) {
@@ -305,6 +312,7 @@
       // mcWrap0 = Choice Genres
       // mcWrap1 = Loading Page
       // mcWrap2 = Music Array
+
       Array.from(mcWrap).forEach((mcWraps) => {
         mcWraps.style.display = "none";
       });
@@ -338,8 +346,6 @@
     }
 
     function yourChoice() {
-      let html = "";
-
       //FIXME: YOUTUBE DATA V3 API 호출 함수, 지속적 요청으로 요청 한도에 걸리기 때문에 주석처리.
       // $.ajax({
       //   crossOrigin: true,
