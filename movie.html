@@ -8,50 +8,12 @@
     <style>
       #movieContent > div {
         width: 300px;
-        height: 400px;
         background-color: white;
         margin: 20px;
       }
     </style>
   </head>
-  <script>
-    var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
-    var request = new XMLHttpRequest();
 
-    request.open("GET", requestURL);
-    console.log(request);
-
-    request.responseType = "json";
-    request.send();
-
-    console.log(request);
-
-    //응답이 반환 된 후
-    request.onload = function () {
-      //응답을 변수에 담는다. (movies)
-      var movies = request.response;
-      console.log(movies);
-
-      //변수에 담은(movies)를 JS 객체에 포함한다.
-      showMovies(movies);
-    };
-
-    var infomation = new Array("title_long", "rating", "runtime");
-
-    function showMovies(jsonObj) {
-      for (i = 0; i < 8; i++) {
-        for (j = 0; j < infomation.length; j++) {
-          document.getElementById("testSec" + i).innerText =
-            jsonObj.data.movies[i][infomation[j]];
-          // document.getElementById("testSec" + i).innerHTML =
-          //   jsonObj.data.movies[i].rating;
-          // document.getElementById("testSec" + i).innerHTML =
-          //   jsonObj.data.movies[i].runtime;
-        }
-        console.log(jsonObj.data.movies[i]);
-      }
-    }
-  </script>
   <body>
     <header>
       <div class="menuBar">
@@ -75,21 +37,7 @@
     </nav>
     <section>
       <div id="movieContent">
-        <div id="testSec0">
-          <img src="" alt="" />
-          <div id="title"></div>
-          <div id="rating"></div>
-          <div id=""></div>
-        </div>
-        <div id="testSec1"></div>
-        <div id="testSec2"></div>
-        <div id="testSec3"></div>
-        <div id="testSec4"></div>
-        <div id="testSec5"></div>
-        <div id="testSec6"></div>
-        <div id="testSec7"></div>
-        <div id="testSec8"></div>
-        <div><img src="./images/movies/hobbit.jpg" /></div>
+        <!-- <div><img src="./images/movies/hobbit.jpg" /></div>
         <div><img src="./images/movies/hobbit2.jpg" /></div>
         <div><img src="./images/movies/hobbit3.jpg" /></div>
         <div><img src="./images/movies/loadOfRing.jpg" /></div>
@@ -97,7 +45,7 @@
         <div><img src="./images/movies/loadOfRing3.jpg" /></div>
         <div>
           <img src="./images/movies/welcomeToDongmakgol.jpg" />
-        </div>
+        </div> -->
       </div>
     </section>
     <footer>
@@ -107,4 +55,70 @@
     </footer>
   </body>
   <script type="text/javascript" src="./js/movies.js"></script>
+  <script>
+    var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
+    var request = new XMLHttpRequest();
+
+    request.open("GET", requestURL);
+    console.log(request);
+
+    request.responseType = "json";
+    request.send();
+
+    console.log(request);
+
+    //응답이 반환 된 후
+    request.onload = function () {
+      //응답을 변수에 담는다. (movies)
+      var movies = request.response;
+      console.log(movies);
+
+      //변수에 담은(movies)를 JS 객체에 포함한다.
+      showMovies(movies);
+    };
+
+    // var infomation = new Array("title_long", "rating", "runtime");
+    // var infoName = new Array("title", "rating", "runtime");
+    // jsonObj.data.movies[i][infomation[j]];
+
+    function showMovies(jsonObj) {
+      for (i = 0; i < 15; i++) {
+        var element = document.createElement("div");
+        element.id = "testSec" + i;
+        // element.textContent = jsonObj.data.movies[i].title_long;
+
+        var addChild = document.getElementById("movieContent");
+        addChild.appendChild(element);
+
+        //Element 아래 하위 요소들
+        var title = document.createElement("div");
+        title.id = "title" + i;
+        title.textContent = jsonObj.data.movies[i].title_long;
+
+        var rating = document.createElement("div");
+        rating.id = "rating" + i;
+        rating.textContent = jsonObj.data.movies[i].rating;
+
+        var runtime = document.createElement("div");
+        runtime.id = "runtime" + i;
+        runtime.textContent = jsonObj.data.movies[i].runtime;
+
+        var years = document.createElement("div");
+        years.id = "year" + i;
+        years.textContent = jsonObj.data.movies[i].runtime;
+
+        var img = document.createElement("img");
+        img.id = "img" + i;
+        img.src = jsonObj.data.movies[i].medium_cover_image;
+
+        // 만들어진 요소들을 movieContent\testSec\ 으로 append
+        var underElement = document.getElementById("testSec" + i);
+        underElement.appendChild(img);
+        underElement.appendChild(title);
+        underElement.appendChild(years);
+        underElement.appendChild(rating);
+        underElement.appendChild(runtime);
+      }
+    }
+  </script>
 </html>
