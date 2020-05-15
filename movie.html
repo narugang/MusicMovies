@@ -98,15 +98,15 @@
 
         var rating = document.createElement("div");
         rating.id = "rating" + i;
-        rating.textContent = jsonObj.data.movies[i].rating;
+        rating.textContent = "평점 : " + jsonObj.data.movies[i].rating;
 
         var runtime = document.createElement("div");
         runtime.id = "runtime" + i;
-        runtime.textContent = jsonObj.data.movies[i].runtime;
+        runtime.textContent = "상영 시간 : " + jsonObj.data.movies[i].runtime;
 
         var years = document.createElement("div");
         years.id = "year" + i;
-        years.textContent = jsonObj.data.movies[i].runtime;
+        years.textContent = "year : " + jsonObj.data.movies[i].year;
 
         var img = document.createElement("img");
         img.id = "img" + i;
@@ -146,16 +146,26 @@
               "_blank",
               "width=600px, height=300px, left=50%, top=50%"
             );
-            win.document.write(
-              document.getElementById("summ" + this.value).textContent
-            );
+            var titleDiv = win.document.createElement("div");
+            titleDiv.textContent = "summary";
+            titleDiv.style.fontSize = "50px";
+
+            var summaryText = win.document.createElement("div");
+            summaryText.textContent = document.getElementById(
+              "summ" + this.value
+            ).textContent;
+
+            // win.document.write(
+            //   document.getElementById("summ" + this.value).textContent
+            // );
 
             var winBtn = win.document.createElement("button");
             winBtn.textContent = "close";
             winBtn.onclick = function () {
               win.close();
             };
-
+            win.document.body.appendChild(titleDiv);
+            win.document.body.appendChild(summaryText);
             win.document.body.appendChild(winBtn);
           }
         };
