@@ -122,6 +122,7 @@
       Soul_Music: "/m/0gywn",
     };
     let eventParam = {};
+    let userTopicID = [];
 
     function isEmptyObject(param) {
       return Object.keys(param).length === 0 && param.constructor === Object;
@@ -131,10 +132,11 @@
     let checkedMusic = document.getElementsByClassName("checked");
     let array = [];
     const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
+    //id.videoId 가 뒤의 링크에 들어간다.
     const YOUTUBE_KEY = "AIzaSyCBZ4UqNyNUSI1JbGGerksXhYcDuTCiCcc";
-    let TOPIC_ID = "/m/04rls"; //Default Topic = Music
+    let DEFAULT_TOPIC_ID = "/m/0glt670"; //Default Topic = Hiphop
 
-    let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${TOPIC_ID}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=US`;
+    let URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${DEFAULT_TOPIC_ID}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=KR`;
     let html = "";
     let here = document.getElementById("musicGenres");
 
@@ -170,7 +172,7 @@
 
     for (var i in music_genres) {
       html += `<div class="css-genresWrap">`;
-      html += `<img src="./images/movies/loadOfRing.jpg" class="css-genresimg" />`;
+      html += `<img src="./images/musicgenres/${i}.png" class="css-genresimg" />`;
       html += `<div class="css-genresTxt">`;
       html += `<span class="css-userGenres">${i} </input></span>`;
       html += `<p class="css-userGenresP">6 Albums</p>`;
@@ -247,6 +249,9 @@
 
     const nextBtn = document.getElementById("nextBtn");
     function nextPage(jsonData) {
+      console.log("nextPage");
+      console.log(jsonData);
+      console.log("nextPage 끝");
       const mcWrap = document.getElementsByClassName("musicWrap");
       let nowPage = 1;
       // mcWrap0 = Choice Genres
@@ -272,9 +277,9 @@
         mcWrap[1].style.display = "flex";
 
         for (let y in jsonData.items) {
-          youtubeData += `<div class="musicContents${index}" id="musicContents">`;
-          youtubeData += `<img src="./images/todaymusic.png" />`;
-          youtubeData += `<p class="musicText">이달의 음악</p>`;
+          youtubeData += `<div class="musicContents${y}" id="musicContents">`;
+          youtubeData += `<img src="${jsonData.items[y].snippet.thumbnails.high.url}" />`;
+          youtubeData += `<p class="musicText">${jsonData.items[y].snippet.title}</p>`;
           youtubeData += `<div class="rating">`;
           youtubeData += `<span class="setRating rating_num1">★</span>`;
           youtubeData += `<span class="setRating rating_num2">★</span>`;
@@ -314,25 +319,35 @@
     }
 
     function yourChoice() {
+      let musicApiData = {};
+
       if (Object.keys(eventParam).length < 2) {
         alert("장르를 두개 이상 선택하여 주십시오.");
         return;
       }
-      // FIXME: YOUTUBE DATA V3 API 호출 함수, 지속적 요청으로 요청 한도에 걸리기 때문에 주석처리.
-      $.ajax({
-        type: "GET",
-        dataType: "JSON",
-        url: URL,
-        contentType: "application/json",
-        success: function (jsonData) {
-          console.log(jsonData);
-          nextPage(jsonData);
-        },
-        complete: function (data) {},
-        error: function (xhr, status, error) {
-          console.log("유튜브 요청 에러: " + error);
-        },
-      });
+
+      if (Object.keys(eventParam).length >= 1) {
+        for (let k in eventParam) {
+          $.ajax({
+            type: "GET",
+            dataType: "JSON",
+            url: URL,
+            contentType: "application/json",
+            success: function (jsonData) {
+              console.log(jsonData);
+              if (Object.keys(jsonData.items).length >= 1) {
+                musicApiData["items"] = jsonData.items;
+              }
+            },
+            complete: function (data) {},
+            error: function (xhr, status, error) {
+              console.log("유튜브 요청 에러: " + error);
+            },
+          });
+        }
+        console.log(musicApiData);
+      }
+      nextPage(musicApiData);
     }
   </script>
 </html>
