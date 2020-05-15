@@ -34,20 +34,13 @@
         />
         <input type="button" id="search_btn" value="Search" />
       </div>
+      <div id="categoryArea">
+        <div></div>
+      </div>
     </nav>
     <section>
-      <div id="testSec"></div>
-      <div id="movieContent">
-        <!-- <div><img src="./images/movies/hobbit.jpg" /></div>
-        <div><img src="./images/movies/hobbit2.jpg" /></div>
-        <div><img src="./images/movies/hobbit3.jpg" /></div>
-        <div><img src="./images/movies/loadOfRing.jpg" /></div>
-        <div><img src="./images/movies/loadOfRing2.jpg" /></div>
-        <div><img src="./images/movies/loadOfRing3.jpg" /></div>
-        <div>
-          <img src="./images/movies/welcomeToDongmakgol.jpg" />
-        </div> -->
-      </div>
+      <!-- <div id="testSec"></div> -->
+      <div id="movieContent"></div>
     </section>
     <footer>
       <div id="footer_Message">
@@ -82,8 +75,17 @@
     // var infoName = new Array("title", "rating", "runtime");
     // jsonObj.data.movies[i][infomation[j]];
 
+    //카테고리 리스트
     function showMovies(jsonObj) {
-      for (i = 0; i < 15; i++) {
+      var area = document.getElementById("categoryArea");
+      for (i = 0; i < jsonObj.data.movies.length; i++) {
+        for (j = 0; j < jsonObj.data.movies[i].genres.length; j++) {
+          console.log(jsonObj.data.movies[i].genres[j]);
+          area.textContent += jsonObj.data.movies[i].genres[j];
+        }
+      }
+
+      for (i = 0; i < jsonObj.data.movies.length; i++) {
         var element = document.createElement("div");
         element.id = "testSec" + i;
         // element.textContent = jsonObj.data.movies[i].title_long;
@@ -149,6 +151,8 @@
             var titleDiv = win.document.createElement("div");
             titleDiv.textContent = "summary";
             titleDiv.style.fontSize = "50px";
+
+            // 카테고리를 보여주고 싶어(0516 시작할 것)
 
             var summaryText = win.document.createElement("div");
             summaryText.textContent = document.getElementById(
