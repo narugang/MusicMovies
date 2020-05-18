@@ -249,9 +249,9 @@
     }
 
     const nextBtn = document.getElementById("nextBtn");
-    function nextPage(jsonData) {
+    function nextPage(userJsonData) {
       console.log("nextPage");
-      console.log(jsonData);
+      console.log("nexPage : ", userJsonData);
       console.log("nextPage 끝");
       const mcWrap = document.getElementsByClassName("musicWrap");
       let nowPage = 1;
@@ -277,10 +277,10 @@
       if (nowPage === 1) {
         mcWrap[1].style.display = "flex";
 
-        for (let y in jsonData.items) {
+        for (let y in userJsonData.items) {
           youtubeData += `<div class="musicContents${y}" id="musicContents">`;
-          youtubeData += `<img src="${jsonData.items[y].snippet.thumbnails.high.url}" />`;
-          youtubeData += `<p class="musicText">${jsonData.items[y].snippet.title}</p>`;
+          youtubeData += `<img src="${userJsonData.items[y].snippet.thumbnails.high.url}" />`;
+          youtubeData += `<p class="musicText">${userJsonData.items[y].snippet.title}</p>`;
           youtubeData += `<div class="rating">`;
           youtubeData += `<span class="setRating rating_num1">★</span>`;
           youtubeData += `<span class="setRating rating_num2">★</span>`;
@@ -326,28 +326,54 @@
         alert("장르를 두개 이상 선택하여 주십시오.");
         return;
       }
-
-      if (Object.keys(eventParam).length >= 1) {
+      if (Object.keys(eventParam).length >= 2) {
         for (let k in eventParam) {
-          $.ajax({
-            type: "GET",
-            dataType: "JSON",
-            url: URL,
-            contentType: "application/json",
-            success: function (jsonData) {
-              console.log(jsonData);
-              if (Object.keys(jsonData.items).length >= 1) {
-                musicApiData["items"] = jsonData.items;
-              }
-            },
-            complete: function (data) {},
-            error: function (xhr, status, error) {
-              console.log("유튜브 요청 에러: " + error);
-            },
-          });
+          URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&topicId=${eventParam[k]}&key=${YOUTUBE_KEY}&maxResults=20&regionCode=KR`;
+          console.log(URL);
+          (function (i) {
+            $.ajax({
+              type: "GET",
+              dataType: "JSON",
+              url: URL,
+              async: false,
+              contentType: "application/json",
+              success: function (jsonData) {
+                console.log(jsonData);
+                if (Object.keys(jsonData.items).length >= 1) {
+                  musicApiData["items"] = jsonData.items;
+                }
+              },
+              complete: function (data) {},
+              error: function (xhr, status, error) {
+                console.log("유튜브 요청 에러: " + error);
+              },
+            });
+          })(i);
         }
-        console.log(musicApiData);
       }
+      // if (Object.keys(eventParam).length >= 1) {
+      //   for (let k in eventParam) {
+      //     $.ajax({
+      //       type: "GET",
+      //       dataType: "JSON",
+      //       url: URL,
+      //       contentType: "application/json",
+      //       success: function (jsonData) {
+      //         console.log(jsonData);
+      //         if (Object.keys(jsonData.items).length >= 1) {
+      //           musicApiData["items"] = jsonData.items;
+      //         }
+      //       },
+      //       complete: function (data) {},
+      //       error: function (xhr, status, error) {
+      //         console.log("유튜브 요청 에러: " + error);
+      //       },
+      //     });
+      //   }
+      //   console.log(musicApiData);
+      // }
+
+      console.log("nextPage 전 musicApiData", musicApiData);
       nextPage(musicApiData);
     }
   </script>
