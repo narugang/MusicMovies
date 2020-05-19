@@ -48,8 +48,8 @@ nav {
   flex-wrap: wrap;
 }
 #movieContent > div > img {
-  width: 300px;
-  height: 400px;
+  /* width: 300px;
+  height: 400px; */
 }
 section {
   margin: 80px;
