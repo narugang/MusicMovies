@@ -26,7 +26,7 @@
       </div>
     </header>
     <nav>
-      <div>
+      <div id="searchArea" style="margin: 30px;">
         <input
           type="text"
           id="searchKeyword"
@@ -34,9 +34,16 @@
         />
         <input type="button" id="search_btn" value="Search" />
       </div>
-      <div id="categoryArea">
-        <div></div>
-      </div>
+      <div
+        id="categoryArea"
+        style="border: 1px solid white; padding: 10px;"
+      ></div>
+      <button
+        id="categorySearch"
+        style="width: 166px; height: 41px; margin-top: 20px;"
+      >
+        category Search
+      </button>
     </nav>
     <section>
       <!-- <div id="testSec"></div> -->
@@ -50,6 +57,42 @@
   </body>
   <script type="text/javascript" src="./js/movies.js"></script>
   <script>
+    var cateL = [
+      "Adventure",
+      "Drama",
+      "Family",
+      "Mystery",
+      "Sci-Fi",
+      "Action",
+      "Crime",
+      "Comedy",
+      "Reality-TV",
+      "Talk-Show",
+      "Sport",
+      "Biography",
+      "History",
+      "Fantasy",
+      "War",
+      "Romance",
+      "Thriller",
+      "Music",
+      "Musical",
+      "Western",
+    ];
+
+    var cateA = document.getElementById("categoryArea");
+    var html = "";
+    for (var i in cateL) {
+      html += `<span style="background: white; margin: 5px;  border-radius: 5px;">`;
+      html += `"${cateL[i]}"`;
+      html += `<input type="checkbox"  id="${cateL[i]}" value="${cateL[i]}" />`;
+      html += `</span>`;
+      if (i == 5 || i == 10) {
+        html += "<br><br>";
+      }
+    }
+    cateA.innerHTML = html;
+
     var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
     var request = new XMLHttpRequest();
 
@@ -77,13 +120,12 @@
 
     //카테고리 리스트
     function showMovies(jsonObj) {
-      var area = document.getElementById("categoryArea");
-      for (i = 0; i < jsonObj.data.movies.length; i++) {
-        for (j = 0; j < jsonObj.data.movies[i].genres.length; j++) {
-          console.log(jsonObj.data.movies[i].genres[j]);
-          area.textContent += jsonObj.data.movies[i].genres[j];
-        }
-      }
+      // var cateList = new Array();
+      // for (i = 0; i < jsonObj.data.movies.length; i++) {
+      //   for (j = 0; j < jsonObj.data.movies[i].genres.length; j++) {
+      //     cateList += jsonObj.data.movies[i].genres[j];
+      //   }
+      // }
 
       for (i = 0; i < jsonObj.data.movies.length; i++) {
         var element = document.createElement("div");
@@ -173,6 +215,7 @@
             win.document.body.appendChild(winBtn);
           }
         };
+
         summuryBtn.textContent = "줄거리 보기";
         summuryBtn.id = "sumBtn" + i;
         summuryBtn.className = "sumBtn";
