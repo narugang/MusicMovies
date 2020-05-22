@@ -33,7 +33,7 @@ var html = "";
 for (var i in cateL) {
   html += `<span style="background: white; margin: 5px;  border-radius: 5px;">`;
   html += `"${cateL[i]}"`;
-  html += `<input type="checkbox" id="${cateL[i]}" name="category" value="${cateL[i]}" />`;
+  html += `<input type="checkbox" id="${cateL[i]}" class="category" value="${cateL[i]}" onclick="click_chk(this)" />`;
   html += `</span>`;
   if (i == 5 || i == 10) {
     html += "<br><br>";
@@ -178,3 +178,42 @@ function showMovies(jsonObj) {
     underElement.appendChild(summury);
   }
 }
+
+var cateSearch_btn = document.getElementById("categorySearch");
+
+var endchk = 3;
+var srtchk = 0;
+var count = 0;
+
+function click_chk(ss) {
+  // console.log(ss.checked);
+  if (ss.checked) {
+    count += 1;
+  } else {
+    count -= 1;
+  }
+  if (count > endchk) {
+    alert("한 개 이상 3개 이하를 선택해 주세요");
+    ss.checked = false;
+    count -= 1;
+  }
+}
+function reset() {
+  count = 0;
+}
+
+cateSearch_btn.onclick = function () {
+  var chkbox = document.getElementsByClassName("category");
+  var chkarry = new Array();
+
+  for (i = 0; i < chkbox.length; i++) {
+    //search_btn을 눌렀을 때, 한 가지 이상 && 3가지 이하의 항목을 선택하도록
+
+    //체크 된 항목의 value뽑기
+    if (document.getElementsByClassName("category")[i].checked == true) {
+      alert(document.getElementsByClassName("category")[i].value);
+      chkarry.push(document.getElementsByClassName("category")[i].value);
+    }
+  }
+  console.log(chkarry);
+};

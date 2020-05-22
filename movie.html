@@ -57,15 +57,72 @@
   </body>
   <script type="text/javascript" src="./js/movies.js"></script>
   <script>
-    var cateSearch_btn = document.getElementById("categorySearch");
-    cateSearch_btn.onclick = function () {
-      var chkbox = document.getElementsByName("category");
-      for (i = 0; i < chkbox.length; i++) {
-        if (chkbox[i].checked) {
-          console.log("check" + i);
-          alert("chk" + i);
-        }
-      }
-    };
+    // var cateSearch_btn = document.getElementById("categorySearch");
+
+    // var endchk = 3;
+    // var srtchk = 0;
+    // var count = 0;
+
+    // function click_chk(ss) {
+    //   // console.log(ss.checked);
+    //   if (ss.checked) {
+    //     count += 1;
+    //   } else {
+    //     count -= 1;
+    //   }
+    //   if (count > endchk) {
+    //     alert("한 개 이상 3개 이하를 선택해 주세요");
+    //     ss.checked = false;
+    //     count -= 1;
+    //   }
+    // }
+    // function reset() {
+    //   count = 0;
+    // }
+
+    // cateSearch_btn.onclick = function () {
+    //   var chkbox = document.getElementsByClassName("category");
+    //   var chkarry = new Array();
+
+    //   for (i = 0; i < chkbox.length; i++) {
+    //     //search_btn을 눌렀을 때, 한 가지 이상 && 3가지 이하의 항목을 선택하도록
+
+    //     //체크 된 항목의 value뽑기
+    //     if (document.getElementsByClassName("category")[i].checked == true) {
+    //       alert(document.getElementsByClassName("category")[i].value);
+    //       chkarry.push(document.getElementsByClassName("category")[i].value);
+    //     }
+    //   }
+    //   console.log(chkarry);
+
+    //   var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
+    //   var request = new XMLHttpRequest();
+    //   request.open("GET", requestURL);
+
+    //   request.responseType = "json";
+    //   request.send();
+    //   console.log("dd" + request);
+    //   //응답이 반환 된 후
+    //   request.onload = function () {
+    //     //응답을 변수에 담는다. (movies)
+    //     var movies = request.response;
+
+    //     //변수에 담은(movies)를 JS 객체에 포함한다.
+    //     showMovies(movies);
+    //   };
+
+    //   function showMoives(jsonObj) {
+    //     for (i = 0; i < chkarry.length; i++) {
+    //       for (j = 0; j < jsonObj.data.movies.length; j++) {
+    //         for (k = 0; k < jsonObj.data.movies[j].genres.length; k++) {
+    //           if (jsonObj.data.movies[j].genres[k] == chkarry[i]) {
+    //             alert("omg");
+    //             console.log("omg");
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // };
   </script>
 </html>
