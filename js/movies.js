@@ -22,23 +22,125 @@ searchBtn.addEventListener("click", function () {
   };
 
   function showMovies(userSearch) {
+    var userSearchContext = new Array();
+
     for (var i in userSearch.data.movies) {
+      //요렇게 비교해서 검색하면 될 듯
+      var aa = keyword.toUpperCase();
+      var bb = userSearch.data.movies[i].title.toUpperCase();
+      console.log(aa);
+      console.log(bb);
+      console.log(bb.indexOf(aa));
+
       if (
         keyword.toUpperCase() == userSearch.data.movies[i].title.toUpperCase()
       ) {
-        return alert("title! name");
+        // return alert("title! name");
+        userSearchContext.push(userSearch.data.movies[i]);
+        console.log(userSearchContext);
       }
       for (var j in userSearch.data.movies[i].genres) {
         if (
           keyword.toUpperCase() ==
           userSearch.data.movies[i].genres[j].toUpperCase()
         ) {
-          return alert("genres! name");
+          // return alert("genres! name");
+          userSearchContext.push(userSearch.data.movies[i]);
         }
+      }
+      if (document.getElementById("testSec" + i) != null) {
+        var oldDiv = document.getElementById("testSec" + i);
+        oldDiv.remove();
       }
     }
 
-    alert(keyword + " " + "[ 준비중 입니다 ]");
+    for (i = 0; i < userSearchContext.length; i++) {
+      var element = document.createElement("div");
+      element.id = "testSec" + i;
+
+      var addChild = document.getElementById("movieContent");
+      addChild.appendChild(element);
+
+      //Element 아래 하위 요소들
+      var title = document.createElement("div");
+      title.id = "title" + i;
+      title.textContent = userSearchContext[i].title_long;
+
+      var rating = document.createElement("div");
+      rating.id = "rating" + i;
+      rating.textContent = "평점 : " + userSearchContext[i].rating;
+
+      var runtime = document.createElement("div");
+      runtime.id = "runtime" + i;
+      runtime.textContent = "상영 시간 : " + userSearchContext[i].runtime;
+
+      var years = document.createElement("div");
+      years.id = "year" + i;
+      years.textContent = "year : " + userSearchContext[i].year;
+
+      var img = document.createElement("img");
+      img.id = "img" + i;
+      img.src = userSearchContext[i].medium_cover_image;
+
+      var summury = document.createElement("div");
+      summury.id = "summ" + i;
+      summury.style.width = "500px";
+      summury.style.height = "550px";
+      summury.style.backgroundColor = "white";
+      summury.style.display = "none";
+      summury.textContent = userSearchContext[i].description_full;
+
+      var summuryBtn = document.createElement("button");
+      summuryBtn.value = i;
+      summuryBtn.onclick = function () {
+        //windo.open() 을 이용해 새로운 창을 열고 그 곳에서 요약 내용을 보여주는 방법.
+        if (
+          (document.getElementById("summ" + this.value).style.display = "none")
+        ) {
+          var win = window.open(
+            "",
+            "_blank",
+            "width=600px, height=300px, left=50%, top=50%"
+          );
+          var titleDiv = win.document.createElement("div");
+          titleDiv.textContent = "summary";
+          titleDiv.style.fontSize = "50px";
+
+          // 카테고리를 보여주고 싶어(0516 시작할 것)
+          var summaryText = win.document.createElement("div");
+          summaryText.textContent = document.getElementById(
+            "summ" + this.value
+          ).textContent;
+
+          var winBtn = win.document.createElement("button");
+          winBtn.textContent = "close";
+          winBtn.onclick = function () {
+            win.close();
+          };
+          win.document.body.appendChild(titleDiv);
+          win.document.body.appendChild(summaryText);
+          win.document.body.appendChild(winBtn);
+        }
+      };
+
+      summuryBtn.textContent = "줄거리 보기";
+      summuryBtn.id = "sumBtn" + i;
+      summuryBtn.className = "sumBtn";
+
+      // 만들어진 요소들을 movieContent\testSec\ 으로 append
+      var underElement = document.getElementById("testSec" + i);
+      underElement.appendChild(img);
+      underElement.appendChild(title);
+      underElement.appendChild(years);
+      underElement.appendChild(rating);
+      underElement.appendChild(runtime);
+      underElement.appendChild(summuryBtn);
+      underElement.appendChild(summury);
+    }
+
+    alert(
+      "[" + keyword + "]" + " " + userSearchContext.length + "개 검색 완료"
+    );
   }
 });
 //검색 버튼[E]
