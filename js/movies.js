@@ -1,9 +1,47 @@
+//검색 버튼[S]
 var searchBtn = document.getElementById("search_btn");
 
 searchBtn.addEventListener("click", function () {
   var keyword = document.getElementById("searchKeyword").value;
-  alert(keyword + " " + "[ 준비중 입니다 ]");
+
+  var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
+  var request = new XMLHttpRequest();
+  request.open("GET", requestURL);
+  console.log(request);
+  request.responseType = "json";
+  request.send();
+  console.log(request);
+
+  //응답이 반환 된 후
+  request.onload = function () {
+    //응답을 변수에 담는다. (movies)
+    var movies = request.response;
+    console.log(movies);
+    //변수에 담은(movies)를 JS 객체에 포함한다.
+    showMovies(movies);
+  };
+
+  function showMovies(userSearch) {
+    for (var i in userSearch.data.movies) {
+      if (
+        keyword.toUpperCase() == userSearch.data.movies[i].title.toUpperCase()
+      ) {
+        return alert("title! name");
+      }
+      for (var j in userSearch.data.movies[i].genres) {
+        if (
+          keyword.toUpperCase() ==
+          userSearch.data.movies[i].genres[j].toUpperCase()
+        ) {
+          return alert("genres! name");
+        }
+      }
+    }
+
+    alert(keyword + " " + "[ 준비중 입니다 ]");
+  }
 });
+//검색 버튼[E]
 
 var cateL = [
   "Adventure",
