@@ -26,26 +26,32 @@ searchBtn.addEventListener("click", function () {
 
     for (var i in userSearch.data.movies) {
       //요렇게 비교해서 검색하면 될 듯
-      var aa = keyword.toUpperCase();
-      var bb = userSearch.data.movies[i].title.toUpperCase();
-      console.log(aa);
-      console.log(bb);
-      console.log(bb.indexOf(aa));
+      var userKey = keyword.toUpperCase();
+      var jsonTitle = userSearch.data.movies[i].title.toUpperCase();
 
-      if (
-        keyword.toUpperCase() == userSearch.data.movies[i].title.toUpperCase()
-      ) {
-        // return alert("title! name");
+      console.log("사용자 검색어 : " + userKey);
+      console.log("Jsonfile내용 : " + jsonTitle);
+      console.log(
+        "단어 비교 (-1) 아니면 중복이 있음 : " + jsonTitle.indexOf(userKey)
+      );
+
+      if (jsonTitle.indexOf(userKey) != -1) {
         userSearchContext.push(userSearch.data.movies[i]);
-        console.log(userSearchContext);
+        // for (var k in userSearchContext) {
+        //   console.log(userSearchContext[k] + ", " + userSearch.data.movies[i]);
+        //   if (userSearchContext[k] != userSearch.data.movies[i]) {
+        //     userSearchContext.push(userSearch.data.movies[i]);
+        //   }
+        // }
+        // userSearchContext.push(userSearch.data.movies[i]);
+        // console.log(userSearchContext);
       }
       for (var j in userSearch.data.movies[i].genres) {
-        if (
-          keyword.toUpperCase() ==
-          userSearch.data.movies[i].genres[j].toUpperCase()
-        ) {
-          // return alert("genres! name");
+        var jsonGenres = userSearch.data.movies[i].genres[j].toUpperCase();
+        console.log(jsonGenres.indexOf(userKey));
+        if (jsonGenres.indexOf(userKey) != -1) {
           userSearchContext.push(userSearch.data.movies[i]);
+          // userSearchContext.push(userSearch.data.movies[i]);
         }
       }
       if (document.getElementById("testSec" + i) != null) {
@@ -53,7 +59,7 @@ searchBtn.addEventListener("click", function () {
         oldDiv.remove();
       }
     }
-
+    console.log(userSearchContext.length);
     for (i = 0; i < userSearchContext.length; i++) {
       var element = document.createElement("div");
       element.id = "testSec" + i;
@@ -77,6 +83,12 @@ searchBtn.addEventListener("click", function () {
       var years = document.createElement("div");
       years.id = "year" + i;
       years.textContent = "year : " + userSearchContext[i].year;
+
+      // genres[s]
+      var genres = document.createElement("div");
+      genres.id = "genres" + i;
+      genres.textContent = "genres : " + userSearchContext[i].genres;
+      // genres[e]
 
       var img = document.createElement("img");
       img.id = "img" + i;
@@ -134,6 +146,7 @@ searchBtn.addEventListener("click", function () {
       underElement.appendChild(years);
       underElement.appendChild(rating);
       underElement.appendChild(runtime);
+      underElement.appendChild(genres);
       underElement.appendChild(summuryBtn);
       underElement.appendChild(summury);
     }
@@ -144,42 +157,6 @@ searchBtn.addEventListener("click", function () {
   }
 });
 //검색 버튼[E]
-
-var cateL = [
-  "Adventure",
-  "Drama",
-  "Family",
-  "Mystery",
-  "Sci-Fi",
-  "Action",
-  "Crime",
-  "Comedy",
-  "Reality-TV",
-  "Talk-Show",
-  "Sport",
-  "Biography",
-  "History",
-  "Fantasy",
-  "War",
-  "Romance",
-  "Thriller",
-  "Music",
-  "Musical",
-  "Western",
-];
-
-var cateA = document.getElementById("categoryArea");
-var html = "";
-for (var i in cateL) {
-  html += `<span style="background: white; margin: 5px;  border-radius: 5px;">`;
-  html += `"${cateL[i]}"`;
-  html += `<input type="checkbox" id="${cateL[i]}" class="category" value="${cateL[i]}" onclick="click_chk(this)" />`;
-  html += `</span>`;
-  if (i == 5 || i == 10) {
-    html += "<br><br>";
-  }
-}
-cateA.innerHTML = html;
 
 var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
 var request = new XMLHttpRequest();
@@ -204,7 +181,23 @@ request.onload = function () {
 
 //카테고리 리스트
 function showMovies(jsonObj) {
+  console.log("window load에 실행되는거니?");
+  //category List[s]
+  var categoryList = new Array();
   for (i = 0; i < jsonObj.data.movies.length; i++) {
+    for (j in jsonObj.data.movies[i].genres) {
+      if (
+        categoryList.length > 0 &&
+        categoryList.indexOf(jsonObj.data.movies[i].genres[j]) == -1
+      ) {
+        categoryList.push(jsonObj.data.movies[i].genres[j]);
+      } else if (categoryList.length == 0) {
+        categoryList.push(jsonObj.data.movies[i].genres[j]);
+      }
+    }
+    console.log(categoryList);
+    //category List[e]
+
     var element = document.createElement("div");
     element.id = "testSec" + i;
 
@@ -227,6 +220,12 @@ function showMovies(jsonObj) {
     var years = document.createElement("div");
     years.id = "year" + i;
     years.textContent = "year : " + jsonObj.data.movies[i].year;
+
+    // genres[s]
+    var genres = document.createElement("div");
+    genres.id = "genres" + i;
+    genres.textContent = "genres : " + jsonObj.data.movies[i].genres;
+    // genres[e]
 
     var img = document.createElement("img");
     img.id = "img" + i;
@@ -284,9 +283,25 @@ function showMovies(jsonObj) {
     underElement.appendChild(years);
     underElement.appendChild(rating);
     underElement.appendChild(runtime);
+    underElement.appendChild(genres);
     underElement.appendChild(summuryBtn);
     underElement.appendChild(summury);
   }
+  //category List[s]
+  var cateA = document.getElementById("categoryArea");
+  var html = "";
+
+  for (var i in categoryList) {
+    html += `<span style="background: white; margin: 5px;  border-radius: 5px;">`;
+    html += `"${categoryList[i]}"`;
+    html += `<input type="checkbox" id="${categoryList[i]}" class="category" value="${categoryList[i]}" onclick="click_chk(this)" />`;
+    html += `</span>`;
+    if (i == 5 || i == 10) {
+      html += "<br><br>";
+    }
+  }
+  cateA.innerHTML = html;
+  //category List[e]
 }
 
 var cateSearch_btn = document.getElementById("categorySearch");
@@ -392,6 +407,12 @@ cateSearch_btn.onclick = function () {
       years.id = "year" + i;
       years.textContent = "year : " + chkGenres[i].year;
 
+      // genres[s]
+      var genres = document.createElement("div");
+      genres.id = "genres" + i;
+      genres.textContent = "genres : " + chkGenres[i].genres;
+      // genres[e]
+
       var img = document.createElement("img");
       img.id = "img" + i;
       img.src = chkGenres[i].medium_cover_image;
@@ -449,6 +470,7 @@ cateSearch_btn.onclick = function () {
       underElement.appendChild(years);
       underElement.appendChild(rating);
       underElement.appendChild(runtime);
+      underElement.appendChild(genres);
       underElement.appendChild(summuryBtn);
       underElement.appendChild(summury);
     }
