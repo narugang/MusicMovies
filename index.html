@@ -3,11 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/index.css" />
     <title>Main</title>
+    <style>
+      #itemBox {
+        display: flex;
+        justify-content: center;
+      }
+      #linkedMusic,
+      #linkedMovies {
+        margin: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: white;
+        border-radius: 10px;
+      }
+      #linkedMusic a,
+      #linkedMovies a {
+        background-color: white;
+        text-decoration: none;
+        color: #343a40;
+      }
+    </style>
   </head>
+  <script>
+    window.onload = function () {
+      var noticeMessage = window.open(
+        "",
+        "_black",
+        "width=600px, height=800px, left=65%, top=50%"
+      );
+      var notiHeader = noticeMessage.document.createElement("div");
+      notiHeader.textContent = "Notice Message";
+      notiHeader.style.font = "50px";
+
+      var notibody = noticeMessage.document.createElement("div");
+      notibody.textContent =
+        "Our page is being prepared. We are sorry for the trouble.";
+      noticeMessage.document.body.appendChild(notiHeader);
+      noticeMessage.document.body.appendChild(notibody);
+    };
+    // var noticeMessage = document.onload(
+    //   window.open("", "_black", "width=600px, height=800px, left=65%, top=50%")
+    // );
+    // var notiHeader = noticeMessage.document.createElement("div");
+    // notiHeader.textContent = "Notice Message";
+    // notiHeader.style.font = "50px";
+
+    // var notibody = notibody.document.createElement("div");
+    // notibody.textContent =
+    //   "Our page is being prepared." + "\n" + "We are sorry for the trouble.";
+  </script>
   <body>
-    <div>
-      <a href="/MusicMovies/music.html"><h5>link music</h5></a></div>
-    <div><a href="/MusicMovies/movie.html"><h5>link movie</h5></a></div>
+    <header>
+      <div class="menuBar">
+        <ul class="menuBarWrap">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./music.html">Your Best Music</a></li>
+          <li><a href="./movie.html">Your Best Movie</a></li>
+          <li><a href="./contactpage.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </header>
+    <section>
+      <div id="itemBox">
+        <div id="linkedMusic">
+          <a href="/MusicMovies/music.html"><h5>link music</h5></a>
+        </div>
+        <div id="linkedMovies">
+          <a href="/MusicMovies/movie.html"><h5>link movie</h5></a>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div id="footer_Message">
+        <b>Copyrightⓒ by Lee&Kang All Right Reserved</b>
+      </div>
+    </footer>
   </body>
 </html>

@@ -34,29 +34,3 @@ nav {
   text-align: center;
   margin: 20px;
 }
-#movieContent > div {
-  width: 300px;
-  background-color: white;
-  margin: 20px;
-}
-#searchKeyword {
-  width: 250px;
-  height: 35px;
-  text-align: center;
-}
-#search_btn {
-  height: 38px;
-  width: 75px;
-}
-#movieContent {
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-#movieContent > div > img {
-  /* width: 300px;
-  height: 400px; */
-}
-section {
-  margin: 80px;
-  margin-top: 20px;
-}

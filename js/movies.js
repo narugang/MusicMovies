@@ -37,21 +37,12 @@ searchBtn.addEventListener("click", function () {
 
       if (jsonTitle.indexOf(userKey) != -1) {
         userSearchContext.push(userSearch.data.movies[i]);
-        // for (var k in userSearchContext) {
-        //   console.log(userSearchContext[k] + ", " + userSearch.data.movies[i]);
-        //   if (userSearchContext[k] != userSearch.data.movies[i]) {
-        //     userSearchContext.push(userSearch.data.movies[i]);
-        //   }
-        // }
-        // userSearchContext.push(userSearch.data.movies[i]);
-        // console.log(userSearchContext);
       }
       for (var j in userSearch.data.movies[i].genres) {
         var jsonGenres = userSearch.data.movies[i].genres[j].toUpperCase();
         console.log(jsonGenres.indexOf(userKey));
         if (jsonGenres.indexOf(userKey) != -1) {
           userSearchContext.push(userSearch.data.movies[i]);
-          // userSearchContext.push(userSearch.data.movies[i]);
         }
       }
       if (document.getElementById("testSec" + i) != null) {
