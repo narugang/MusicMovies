@@ -141,10 +141,6 @@ searchBtn.addEventListener("click", function () {
       underElement.appendChild(summuryBtn);
       underElement.appendChild(summury);
     }
-
-    alert(
-      "[" + keyword + "]" + " " + userSearchContext.length + "개 검색 완료"
-    );
   }
 });
 //검색 버튼[E]
@@ -318,7 +314,11 @@ function reset() {
   count = 0;
 }
 
+var chkarry = new Array();
+
 cateSearch_btn.onclick = function () {
+  alert("please wait 5sec...");
+
   var chkbox = document.getElementsByClassName("category");
   var chkarry = new Array();
 
@@ -327,7 +327,7 @@ cateSearch_btn.onclick = function () {
 
     //체크 된 항목의 value뽑기
     if (document.getElementsByClassName("category")[i].checked == true) {
-      alert(document.getElementsByClassName("category")[i].value);
+      // alert(document.getElementsByClassName("category")[i].value);
       chkarry.push(document.getElementsByClassName("category")[i].value);
     }
   }
@@ -467,3 +467,18 @@ cateSearch_btn.onclick = function () {
     }
   }
 };
+// resetArray();
+// function showGenres() {
+//   var userChkGen = document.getElementById("showUserChoice");
+//   if (userChkGen.append != null) {
+//     resetGenresArea();
+//   } else {
+//     userChkGen.append("Your choice Genres is : " + chkarry);
+//   }
+// }
+// function resetArray() {
+//   console.log("chkArray안에 배열 값 확인" + chkarry);
+//   //   document.getElementById("showUserChoice").remove();
+//   //   // chkarry.length = 0;
+//   chkarry.length = 0;
+// }

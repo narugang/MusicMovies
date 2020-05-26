@@ -52,11 +52,25 @@ nav {
   display: inline-flex;
   flex-wrap: wrap;
 }
-#movieContent > div > img {
-  /* width: 300px;
-  height: 400px; */
-}
+
 section {
   margin: 80px;
   margin-top: 20px;
+}
+#categoryArea {
+  border: 1px solid white;
+  padding: 30px;
+}
+#categorySearch {
+  width: 166px;
+  height: 41px;
+  margin-top: 20px;
+}
+#searchArea {
+  margin: 30px;
+  margin-top: 15px;
+}
+#search_guide {
+  font-size: x-large;
+  color: white;
 }

@@ -6,54 +6,15 @@
     <link rel="stylesheet" href="./css/index.css" />
     <title>Main</title>
     <style>
-      #itemBox {
-        display: flex;
-        justify-content: center;
-      }
-      #linkedMusic,
-      #linkedMovies {
-        margin: 30px;
-        padding-left: 20px;
-        padding-right: 20px;
-        background-color: white;
-        border-radius: 10px;
-      }
-      #linkedMusic a,
-      #linkedMovies a {
-        background-color: white;
-        text-decoration: none;
-        color: #343a40;
+      #guideArea {
+        color: white;
+        margin-left: 50px;
+        margin-top: 50px;
+        margin-bottom: 30px;
       }
     </style>
   </head>
-  <script>
-    window.onload = function () {
-      var noticeMessage = window.open(
-        "",
-        "_black",
-        "width=600px, height=800px, left=65%, top=50%"
-      );
-      var notiHeader = noticeMessage.document.createElement("div");
-      notiHeader.textContent = "Notice Message";
-      notiHeader.style.font = "50px";
-
-      var notibody = noticeMessage.document.createElement("div");
-      notibody.textContent =
-        "Our page is being prepared. We are sorry for the trouble.";
-      noticeMessage.document.body.appendChild(notiHeader);
-      noticeMessage.document.body.appendChild(notibody);
-    };
-    // var noticeMessage = document.onload(
-    //   window.open("", "_black", "width=600px, height=800px, left=65%, top=50%")
-    // );
-    // var notiHeader = noticeMessage.document.createElement("div");
-    // notiHeader.textContent = "Notice Message";
-    // notiHeader.style.font = "50px";
-
-    // var notibody = notibody.document.createElement("div");
-    // notibody.textContent =
-    //   "Our page is being prepared." + "\n" + "We are sorry for the trouble.";
-  </script>
+  <script type="text/javascript" src="./js/index.js"></script>
   <body>
     <header>
       <div class="menuBar">
@@ -66,12 +27,23 @@
       </div>
     </header>
     <section>
+      <div id="guideArea">
+        <h2>
+          User guide
+        </h2>
+        &nbsp;&nbsp;1. You can find the music you want by clicking Search Music
+        in the middle of the page. <br /><br />
+        &nbsp;&nbsp;2. You can find the movie you want by clicking on the Movie
+        search in the middle of the page. <br /><br />
+        &nbsp;&nbsp;3. All of the content on this page is for learning purposes
+        and does not make a profit.
+      </div>
       <div id="itemBox">
         <div id="linkedMusic">
-          <a href="/MusicMovies/music.html"><h5>link music</h5></a>
+          <a href="/MusicMovies/music.html"><h2>Search Music</h2></a>
         </div>
         <div id="linkedMovies">
-          <a href="/MusicMovies/movie.html"><h5>link movie</h5></a>
+          <a href="/MusicMovies/movie.html"><h2>Search Movie</h2></a>
         </div>
       </div>
     </section>

@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>movies</title>
     <link rel="stylesheet" href="./css/movies.css" />
+    <style>
+      #guideText {
+        color: white;
+      }
+      #showUserChoice {
+        font-size: x-large;
+        color: navajowhite;
+        padding-bottom: 10px;
+      }
+    </style>
   </head>
 
   <body>
@@ -19,7 +29,10 @@
       </div>
     </header>
     <nav>
-      <div id="searchArea" style="margin: 30px;">
+      <div id="search_guide">
+        You can search movies by title or genres.
+      </div>
+      <div id="searchArea">
         <input
           type="text"
           id="searchKeyword"
@@ -27,19 +40,16 @@
         />
         <input type="button" id="search_btn" value="Search" />
       </div>
-      <div
-        id="categoryArea"
-        style="border: 1px solid white; padding: 10px;"
-      ></div>
-      <button
-        id="categorySearch"
-        style="width: 166px; height: 41px; margin-top: 20px;"
-      >
+      <div id="guideText">
+        <h3>You can search movies by selecting 3 or less genres.</h3>
+      </div>
+      <div id="categoryArea"></div>
+      <button id="categorySearch">
         category Search
       </button>
     </nav>
     <section>
-      <!-- <div id="testSec"></div> -->
+      <div id="showUserChoice"></div>
       <div id="movieContent"></div>
     </section>
     <footer>

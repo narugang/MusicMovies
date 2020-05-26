@@ -34,3 +34,22 @@ nav {
   text-align: center;
   margin: 20px;
 }
+#itemBox {
+  display: flex;
+  /* justify-content: center; */
+  margin: 30px;
+}
+#linkedMusic,
+#linkedMovies {
+  margin: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: white;
+  border-radius: 10px;
+}
+#linkedMusic a,
+#linkedMovies a {
+  background-color: white;
+  text-decoration: none;
+  color: #343a40;
+}
