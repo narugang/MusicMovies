@@ -53,3 +53,9 @@ nav {
   text-decoration: none;
   color: #343a40;
 }
+#guideArea {
+  color: white;
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
