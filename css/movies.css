@@ -24,7 +24,7 @@ footer {
   color: #ffffff;
 }
 .menuBarWrap > li {
-  float: left;
+  display: inline-flex;
   flex-direction: column;
   margin-right: 10px;
   background-color: white;
