@@ -154,149 +154,173 @@ function searchMovies() {
 }
 
 var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
+var requestURLTwo = "https://yts.mx/api/v2/list_movies.json";
 var request = new XMLHttpRequest();
+var requestTwo = new XMLHttpRequest();
 
 request.open("GET", requestURL);
-console.log(request);
-
+// if (request.open) {
+requestTwo.open("GET", requestURLTwo);
+// }
+console.log("request" + request);
+console.log("requestTwo" + requestTwo);
 request.responseType = "json";
+requestTwo.responseType = "json";
 request.send();
+requestTwo.send();
 
-console.log(request);
-
+console.log("request send 이 후" + request);
+console.log("requestTwo send 이 후" + requestTwo);
 //응답이 반환 된 후
 request.onload = function () {
   //응답을 변수에 담는다. (movies)
   var movies = request.response;
   console.log(movies);
+  moviesTwo = requestTwo.response;
+  console.log(moviesTwo);
+
+  var moviesArray = new Array();
+  moviesArray.push(movies);
+  moviesArray.push(moviesTwo);
+  console.log(moviesArray);
 
   //변수에 담은(movies)를 JS 객체에 포함한다.
-  showMovies(movies);
+  showMovies(moviesArray);
 };
 
+// function showMoviesTwo(jsonDD) {
+//   for (var i = 0; i < jsonDD.length; i++) {
+//     for (var j = 0; j < jsonDD[i].data.movies.length; j++) {
+//       console.log("제발... 제발 뽑혀라 " + jsonDD[i].data.movies[j].id);
+//     }
+//   }
+// }
 //카테고리 리스트
 function showMovies(jsonObj) {
-  console.log("window load에 실행되는거니?");
   //category List[s]
   var categoryList = new Array();
-  for (i = 0; i < jsonObj.data.movies.length; i++) {
-    for (j in jsonObj.data.movies[i].genres) {
-      if (
-        categoryList.length > 0 &&
-        categoryList.indexOf(jsonObj.data.movies[i].genres[j]) == -1
-      ) {
-        categoryList.push(jsonObj.data.movies[i].genres[j]);
-      } else if (categoryList.length == 0) {
-        categoryList.push(jsonObj.data.movies[i].genres[j]);
+  for (i = 0; i < jsonObj.length; i++) {
+    // for (i = 0; i < jsonObj.data.movies.length; i++) {
+    for (var k = 0; k < jsonObj[i].data.movies.length; k++) {
+      for (j in jsonObj[i].data.movies[k].genres) {
+        // for (j in jsonObj.data.movies[i].genres) {
+        if (
+          categoryList.length > 0 &&
+          categoryList.indexOf(jsonObj[i].data.movies[k].genres[j]) == -1
+        ) {
+          categoryList.push(jsonObj[i].data.movies[k].genres[j]);
+        } else if (categoryList.length == 0) {
+          categoryList.push(jsonObj[i].data.movies[k].genres[j]);
+        }
+      }
+      console.log(categoryList);
+      //category List[e]
+
+      var element = document.createElement("div");
+      element.id = "testSec" + k;
+
+      var addChild = document.getElementById("movieContent");
+      addChild.appendChild(element);
+
+      //Element 아래 하위 요소들
+      var title = document.createElement("div");
+      title.id = "title" + k;
+      title.textContent = jsonObj[i].data.movies[k].title_long;
+
+      var rating = document.createElement("div");
+      rating.id = "rating" + k;
+      rating.textContent = "평점 : " + jsonObj[i].data.movies[k].rating;
+
+      var runtime = document.createElement("div");
+      runtime.id = "runtime" + k;
+      runtime.textContent = "상영 시간 : " + jsonObj[i].data.movies[k].runtime;
+
+      var years = document.createElement("div");
+      years.id = "year" + k;
+      years.textContent = "year : " + jsonObj[i].data.movies[k].year;
+
+      // genres[s]
+      var genres = document.createElement("div");
+      genres.id = "genres" + k;
+      genres.textContent = "genres : " + jsonObj[i].data.movies[k].genres;
+      // genres[e]
+
+      var img = document.createElement("img");
+      img.id = "img" + k;
+      img.src = jsonObj[i].data.movies[k].medium_cover_image;
+
+      var summury = document.createElement("div");
+      summury.id = "summ" + k;
+      summury.style.width = "500px";
+      summury.style.height = "550px";
+      summury.style.backgroundColor = "white";
+      summury.style.display = "none";
+      summury.textContent = jsonObj[i].data.movies[k].description_full;
+
+      var summuryBtn = document.createElement("button");
+      summuryBtn.value = k;
+      summuryBtn.onclick = function () {
+        //windo.open() 을 이용해 새로운 창을 열고 그 곳에서 요약 내용을 보여주는 방법.
+        if (
+          (document.getElementById("summ" + this.value).style.display = "none")
+        ) {
+          var win = window.open(
+            "",
+            "_blank",
+            "width=600px, height=300px, left=50%, top=50%"
+          );
+          var titleDiv = win.document.createElement("div");
+          titleDiv.textContent = "summary";
+          titleDiv.style.fontSize = "50px";
+
+          // 카테고리를 보여주고 싶어(0516 시작할 것)
+          var summaryText = win.document.createElement("div");
+          summaryText.textContent = document.getElementById(
+            "summ" + this.value
+          ).textContent;
+
+          var winBtn = win.document.createElement("button");
+          winBtn.textContent = "close";
+          winBtn.onclick = function () {
+            win.close();
+          };
+          win.document.body.appendChild(titleDiv);
+          win.document.body.appendChild(summaryText);
+          win.document.body.appendChild(winBtn);
+        }
+      };
+
+      summuryBtn.textContent = "줄거리 보기";
+      summuryBtn.id = "sumBtn" + k;
+      summuryBtn.className = "sumBtn";
+
+      // 만들어진 요소들을 movieContent\testSec\ 으로 append
+      var underElement = document.getElementById("testSec" + k);
+      underElement.appendChild(img);
+      underElement.appendChild(title);
+      underElement.appendChild(years);
+      underElement.appendChild(rating);
+      underElement.appendChild(runtime);
+      underElement.appendChild(genres);
+      underElement.appendChild(summuryBtn);
+      underElement.appendChild(summury);
+    }
+    //category List[s]
+    var cateA = document.getElementById("categoryArea");
+    var html = "";
+
+    for (var i in categoryList) {
+      html += `<span style="background: white; margin: 5px;  border-radius: 5px;">`;
+      html += `${categoryList[i]}`;
+      html += `<input type="checkbox" id="${categoryList[i]}" class="category" value="${categoryList[i]}" onclick="click_chk(this)" />`;
+      html += `</span>`;
+      if (i == 5 || i == 10) {
+        html += "<br><br>";
       }
     }
-    console.log(categoryList);
+    cateA.innerHTML = html;
     //category List[e]
-
-    var element = document.createElement("div");
-    element.id = "testSec" + i;
-
-    var addChild = document.getElementById("movieContent");
-    addChild.appendChild(element);
-
-    //Element 아래 하위 요소들
-    var title = document.createElement("div");
-    title.id = "title" + i;
-    title.textContent = jsonObj.data.movies[i].title_long;
-
-    var rating = document.createElement("div");
-    rating.id = "rating" + i;
-    rating.textContent = "평점 : " + jsonObj.data.movies[i].rating;
-
-    var runtime = document.createElement("div");
-    runtime.id = "runtime" + i;
-    runtime.textContent = "상영 시간 : " + jsonObj.data.movies[i].runtime;
-
-    var years = document.createElement("div");
-    years.id = "year" + i;
-    years.textContent = "year : " + jsonObj.data.movies[i].year;
-
-    // genres[s]
-    var genres = document.createElement("div");
-    genres.id = "genres" + i;
-    genres.textContent = "genres : " + jsonObj.data.movies[i].genres;
-    // genres[e]
-
-    var img = document.createElement("img");
-    img.id = "img" + i;
-    img.src = jsonObj.data.movies[i].medium_cover_image;
-
-    var summury = document.createElement("div");
-    summury.id = "summ" + i;
-    summury.style.width = "500px";
-    summury.style.height = "550px";
-    summury.style.backgroundColor = "white";
-    summury.style.display = "none";
-    summury.textContent = jsonObj.data.movies[i].description_full;
-
-    var summuryBtn = document.createElement("button");
-    summuryBtn.value = i;
-    summuryBtn.onclick = function () {
-      //windo.open() 을 이용해 새로운 창을 열고 그 곳에서 요약 내용을 보여주는 방법.
-      if (
-        (document.getElementById("summ" + this.value).style.display = "none")
-      ) {
-        var win = window.open(
-          "",
-          "_blank",
-          "width=600px, height=300px, left=50%, top=50%"
-        );
-        var titleDiv = win.document.createElement("div");
-        titleDiv.textContent = "summary";
-        titleDiv.style.fontSize = "50px";
-
-        // 카테고리를 보여주고 싶어(0516 시작할 것)
-        var summaryText = win.document.createElement("div");
-        summaryText.textContent = document.getElementById(
-          "summ" + this.value
-        ).textContent;
-
-        var winBtn = win.document.createElement("button");
-        winBtn.textContent = "close";
-        winBtn.onclick = function () {
-          win.close();
-        };
-        win.document.body.appendChild(titleDiv);
-        win.document.body.appendChild(summaryText);
-        win.document.body.appendChild(winBtn);
-      }
-    };
-
-    summuryBtn.textContent = "줄거리 보기";
-    summuryBtn.id = "sumBtn" + i;
-    summuryBtn.className = "sumBtn";
-
-    // 만들어진 요소들을 movieContent\testSec\ 으로 append
-    var underElement = document.getElementById("testSec" + i);
-    underElement.appendChild(img);
-    underElement.appendChild(title);
-    underElement.appendChild(years);
-    underElement.appendChild(rating);
-    underElement.appendChild(runtime);
-    underElement.appendChild(genres);
-    underElement.appendChild(summuryBtn);
-    underElement.appendChild(summury);
   }
-  //category List[s]
-  var cateA = document.getElementById("categoryArea");
-  var html = "";
-
-  for (var i in categoryList) {
-    html += `<span style="background: white; margin: 5px;  border-radius: 5px;">`;
-    html += `"${categoryList[i]}"`;
-    html += `<input type="checkbox" id="${categoryList[i]}" class="category" value="${categoryList[i]}" onclick="click_chk(this)" />`;
-    html += `</span>`;
-    if (i == 5 || i == 10) {
-      html += "<br><br>";
-    }
-  }
-  cateA.innerHTML = html;
-  //category List[e]
 }
 
 var cateSearch_btn = document.getElementById("categorySearch");
