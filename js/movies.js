@@ -16,16 +16,13 @@ function searchMovies() {
   var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
   var request = new XMLHttpRequest();
   request.open("GET", requestURL);
-  console.log(request);
   request.responseType = "json";
   request.send();
-  console.log(request);
 
   //응답이 반환 된 후
   request.onload = function () {
     //응답을 변수에 담는다. (movies)
     var movies = request.response;
-    console.log(movies);
     //변수에 담은(movies)를 JS 객체에 포함한다.
     showMovies(movies);
   };
@@ -38,18 +35,11 @@ function searchMovies() {
       var userKey = keyword.toUpperCase();
       var jsonTitle = userSearch.data.movies[i].title.toUpperCase();
 
-      console.log("사용자 검색어 : " + userKey);
-      console.log("Jsonfile내용 : " + jsonTitle);
-      console.log(
-        "단어 비교 (-1) 아니면 중복이 있음 : " + jsonTitle.indexOf(userKey)
-      );
-
       if (jsonTitle.indexOf(userKey) != -1) {
         userSearchContext.push(userSearch.data.movies[i]);
       }
       for (var j in userSearch.data.movies[i].genres) {
         var jsonGenres = userSearch.data.movies[i].genres[j].toUpperCase();
-        console.log(jsonGenres.indexOf(userKey));
         if (jsonGenres.indexOf(userKey) != -1) {
           userSearchContext.push(userSearch.data.movies[i]);
         }
@@ -59,7 +49,6 @@ function searchMovies() {
         oldDiv.remove();
       }
     }
-    console.log(userSearchContext.length);
     for (i = 0; i < userSearchContext.length; i++) {
       var element = document.createElement("div");
       element.id = "testSec" + i;
@@ -162,39 +151,25 @@ request.open("GET", requestURL);
 // if (request.open) {
 requestTwo.open("GET", requestURLTwo);
 // }
-console.log("request" + request);
-console.log("requestTwo" + requestTwo);
 request.responseType = "json";
 requestTwo.responseType = "json";
 request.send();
 requestTwo.send();
 
-console.log("request send 이 후" + request);
-console.log("requestTwo send 이 후" + requestTwo);
 //응답이 반환 된 후
 request.onload = function () {
   //응답을 변수에 담는다. (movies)
   var movies = request.response;
-  console.log(movies);
   moviesTwo = requestTwo.response;
-  console.log(moviesTwo);
 
   var moviesArray = new Array();
   moviesArray.push(movies);
   moviesArray.push(moviesTwo);
-  console.log(moviesArray);
 
   //변수에 담은(movies)를 JS 객체에 포함한다.
   showMovies(moviesArray);
 };
 
-// function showMoviesTwo(jsonDD) {
-//   for (var i = 0; i < jsonDD.length; i++) {
-//     for (var j = 0; j < jsonDD[i].data.movies.length; j++) {
-//       console.log("제발... 제발 뽑혀라 " + jsonDD[i].data.movies[j].id);
-//     }
-//   }
-// }
 //카테고리 리스트
 function showMovies(jsonObj) {
   //category List[s]
@@ -213,9 +188,7 @@ function showMovies(jsonObj) {
           categoryList.push(jsonObj[i].data.movies[k].genres[j]);
         }
       }
-      console.log(categoryList);
       //category List[e]
-
       var element = document.createElement("div");
       element.id = "testSec" + k;
 
@@ -322,7 +295,6 @@ function showMovies(jsonObj) {
     //category List[e]
   }
 }
-
 var cateSearch_btn = document.getElementById("categorySearch");
 
 var endchk = 3;
@@ -330,7 +302,6 @@ var srtchk = 0;
 var count = 0;
 
 function click_chk(ss) {
-  // console.log(ss.checked);
   if (ss.checked) {
     count += 1;
   } else {
@@ -363,21 +334,17 @@ cateSearch_btn.onclick = function () {
       chkarry.push(document.getElementsByClassName("category")[i].value);
     }
   }
-  console.log(chkarry);
 
   var requestURL = "https://yts.mx/api/v2/list_movies.json?sort_by=rating";
   var request = new XMLHttpRequest();
   request.open("GET", requestURL);
-  console.log(request);
   request.responseType = "json";
   request.send();
-  console.log(request);
 
   //응답이 반환 된 후
   request.onload = function () {
     //응답을 변수에 담는다. (movies)
     var movies = request.response;
-    console.log(movies);
     //변수에 담은(movies)를 JS 객체에 포함한다.
     showMovies(movies);
   };
@@ -389,15 +356,11 @@ cateSearch_btn.onclick = function () {
       for (j = 0; j < ct.data.movies[i].genres.length; j++) {
         for (k = 0; k < chkarry.length; k++) {
           if (ct.data.movies[i].genres[j] == chkarry[k]) {
-            console.log(ct.data.movies[i]);
             chkGenres.push(ct.data.movies[i]);
-            console.log(ct.data.movies[i].genres[j]);
-            console.log("collect data!");
           }
         }
       }
     }
-    console.log(chkGenres);
 
     for (i = 0; i < ct.data.movies.length; i++) {
       var tesS = document.getElementById("testSec" + i);
@@ -463,8 +426,6 @@ cateSearch_btn.onclick = function () {
           var titleDiv = win.document.createElement("div");
           titleDiv.textContent = "summary";
           titleDiv.style.fontSize = "50px";
-
-          // 카테고리를 보여주고 싶어(0516 시작할 것)
 
           var summaryText = win.document.createElement("div");
           summaryText.textContent = document.getElementById(
