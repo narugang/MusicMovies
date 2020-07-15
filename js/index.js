@@ -4,6 +4,7 @@ window.onload = function () {
     "_black",
     "resizable=no, width=600px, height=290px, left=200px, top=50%"
   );
+
   var notiBody = noticeMessage.document.createElement("div");
   notiBody.id = "notiBody";
   notiBody.style.backgroundColor = "#343a40";
